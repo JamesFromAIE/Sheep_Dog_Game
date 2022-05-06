@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Flock/Behaviour/SteeredCohesion")]
 public class SteeredCohesionBehaviour : FilteredFlockBehaviour
 {
     Vector3 _currentVelocity;
+    float3 _currentSpeed;
     public float AgentSmoothTime = 0.5f;
 
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
@@ -29,4 +31,5 @@ public class SteeredCohesionBehaviour : FilteredFlockBehaviour
         return cohesionMove.GroundV3();
     }
 
+   
 }
