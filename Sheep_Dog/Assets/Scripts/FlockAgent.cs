@@ -112,6 +112,16 @@ public class FlockAgent : MonoBehaviour
 
             ChangeAgentState(AgentState.Scared);
         }
+        
+        if (other.CompareTag("Gate"))
+        {
+            // ENTERED OUTSIDE GATE
+
+            _agentFlock.RemoveAgentFromList(this);
+            UIManager.Instance.IncrementCapturedSheep();
+
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerExit(Collider other)

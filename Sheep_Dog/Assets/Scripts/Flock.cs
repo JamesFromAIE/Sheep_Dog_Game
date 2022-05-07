@@ -118,6 +118,11 @@ public class Flock : MonoBehaviour
 
     }
 
+    public void RemoveAgentFromList(FlockAgent agent)
+    {
+        if (_agents.Contains(agent)) _agents.Remove(agent);
+    }
+
     void SetAgentSpeedFromDogsJob()
     {
         NativeArray<float> speedList = new NativeArray<float>(_agents.Count, Allocator.TempJob); // ARRAY FOR CURRENT DATA (EMPTY)
