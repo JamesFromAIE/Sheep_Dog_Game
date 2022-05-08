@@ -6,6 +6,25 @@ using Unity.Collections;
 
 public static class Helper 
 {
+    public static bool AreListsMatching<T>(this List<T> firstList, List<T> secondList)
+    {
+        if (firstList.Count != secondList.Count) return false; // IF COUNT SIN'T EQUAL, FALSE
+
+        foreach (T item in firstList)
+        {
+            if (secondList.Contains(item)) // IF BOTH LISTS CONTAIN THIS ITEM
+            {
+                int indexA = firstList.IndexOf(item);
+                int indexB = secondList.IndexOf(item);
+
+                if (!(indexA == indexB)) return false; // IF ITEM IS IN DIFFERENT INDEX
+            }
+            else return false;
+        }
+
+        return true;
+    }
+
     public static List<Vector3> ConvertNativePathToV3Path(this NativeArray<int2> oldArray)
     {
         var list = new List<Vector3>();

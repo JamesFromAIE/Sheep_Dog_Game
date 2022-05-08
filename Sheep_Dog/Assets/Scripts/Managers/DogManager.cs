@@ -16,7 +16,7 @@ public class DogManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButton(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -39,7 +39,7 @@ public class DogManager : MonoBehaviour
                                                             new List<Vector3>());
 
                     if (pathList == null) Debug.LogError("There is NO path in this list");
-                    else
+                    else 
                     {
                         dog.MoveDogToPositionList(pathList);
                     }

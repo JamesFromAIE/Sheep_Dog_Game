@@ -65,9 +65,12 @@ public class DogPathfinding : MonoBehaviour
         for (int i = 0; i < finalPath.Count; i++)
         {
             finalPath[i] += gridOffset;
-            finalPath[i].ShuffleV3();
+            //finalPath[i].ShuffleV3();
         }
-        finalPath.RemoveAt(0);
+
+        if (finalPath.Count != 0) finalPath.RemoveAt(0);
+        if (finalPath.Count != 0) finalPath.RemoveAt(0);
+
 
         pathResult.Dispose();
         unWalkableInt2s.Dispose();

@@ -14,6 +14,9 @@ public class Dog : MonoBehaviour
     public bool IsSitting { get; private set; }
     public DogStates State { get; private set; } = DogStates.Idle;
 
+    public List<Vector3> PreviousPath { get; private set; } = new List<Vector3>();
+    
+
 
     #region Public Methods
 
@@ -36,6 +39,8 @@ public class Dog : MonoBehaviour
 
     public async void MoveDogToPositionList(List<Vector3> posList)
     {
+        PreviousPath = posList;
+
         TokenSource = new CancellationTokenSource();
         var token = TokenSource.Token;
         //IsMoving = true;
@@ -50,8 +55,8 @@ public class Dog : MonoBehaviour
             }
             catch (OperationCanceledException ex)
             {
-                Debug.Log("CAUGHT IT");
-                TokenSource.Dispose();
+                //Debug.Log("CAUGHT IT");
+                TokenSource?.Dispose();
                 TokenSource = null;
                 ChangeDogState(DogStates.Idle);
             }
@@ -98,6 +103,8 @@ public class Dog : MonoBehaviour
             }
         }
     }
+
+    
 
     #endregion
 }
