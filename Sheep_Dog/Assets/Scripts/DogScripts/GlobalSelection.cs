@@ -31,26 +31,17 @@ public class GlobalSelection : MonoBehaviour
 
             if (Physics.Raycast(ray, out _hit, 100.0f, (1 << 10)))
             {
-                if (Input.GetKey(KeyCode.LeftShift)) //inclusive select
-                {
-                    _selectedTable.AddSelected(_hit.transform.GetComponentInParent<Dog>());
-                }
-                else //exclusive selected
-                {
-                    _selectedTable.DeselectAll();
-                    _selectedTable.AddSelected(_hit.transform.GetComponentInParent<Dog>());
-                }
+                if (_selectedTable.SelectedTable.ContainsKey(_hit.transform.GetComponent<Dog>().GetInstanceID())) return;
+
+                _selectedTable.DeselectAll();
+
+                _selectedTable.AddSelected(_hit.transform.GetComponentInParent<Dog>());
             }
             else //if we didnt _hit something
             {
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    //do nothing
-                }
-                else
-                {
-                    _selectedTable.DeselectAll();
-                }
+
+                _selectedTable.DeselectAll();
+                
             }
 
         }

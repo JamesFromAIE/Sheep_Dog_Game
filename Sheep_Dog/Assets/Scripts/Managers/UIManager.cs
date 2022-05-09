@@ -31,8 +31,7 @@ public class UIManager : MonoBehaviour
     [Header("Failure UI")]
     [SerializeField] GameObject _allFailureUI;
 
-
-    void Start()
+    public void InitialiseUI()
     {
         UpdateUI();
         _runningTimer = _startingTimer;
@@ -78,6 +77,8 @@ public class UIManager : MonoBehaviour
     {
         _sheepCount++;
         UpdateUI();
+
+        if (_sheepCount >= _maxSheep) GameManager.Instance.UpdateGameState(GameState.Complete);
     }
 
     void DisplayTime(float timeToDisplay)
@@ -94,5 +95,10 @@ public class UIManager : MonoBehaviour
     public void RestartScene()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

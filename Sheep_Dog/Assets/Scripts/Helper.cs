@@ -6,15 +6,17 @@ using Unity.Collections;
 
 public static class Helper 
 {
+    public static void DeleteChildren(this Transform t)
+    {
+        foreach (Transform child in t) Object.Destroy(child.gameObject);
+    }
     public static bool IsPointWalkable(Vector3 point, List<Transform> obj)
     {
         foreach (Transform t in obj)
         {
-            if (t.TryGetComponent(out Collider col))
-            {
-                Bounds bounds = col.bounds;
-                if (bounds.Contains(point)) return false;
-            }
+            Bounds bounds = t.GetComponent<Collider>().bounds;
+            if (bounds.Contains(point)) return false;
+            
         }
 
         return true; // NO TRANSFORMS IN THE LIST

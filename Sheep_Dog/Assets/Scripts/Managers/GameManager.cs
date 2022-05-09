@@ -10,13 +10,11 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-
-        
     }
 
     void Start()
     {
-        UpdateGameState(GameState.Playing);
+        UpdateGameState(GameState.GenerateLevel);
     }
 
 
@@ -28,6 +26,14 @@ public class GameManager : MonoBehaviour
 
         switch (State)
         {
+            case GameState.GenerateLevel:
+                Flock.Instance.SpawnNewFlock();
+                ObstacleManager.Instance.SpawnObstacles();
+                DogManager.Instance.SpawnDogs();
+                UIManager.Instance.InitialiseUI();
+
+                UpdateGameState(GameState.Playing);
+                break;
             case GameState.Playing:
                 Time.timeScale = 1f;
                 break;
@@ -49,8 +55,9 @@ public class GameManager : MonoBehaviour
 
 public enum GameState
 {
-    Playing = 0,
-    Paused = 1,
-    Complete = 2,
-    Failure = 3,
+    GenerateLevel=0,
+    Playing = 1,
+    Paused = 2,
+    Complete = 3,
+    Failure = 4,
 }

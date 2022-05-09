@@ -96,6 +96,7 @@ public class Dog : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, destination, MoveSpeed * Time.deltaTime);
             transform.forward = Vector3.SmoothDamp(transform.forward, destination - transform.position, ref _currentVelocity, _turnTime);
+            //transform.forward = destination - transform.position;
             await Task.Yield();
 
             if (token.IsCancellationRequested)
@@ -107,7 +108,13 @@ public class Dog : MonoBehaviour
         }
     }
 
-    
+    void OnDestroy()
+    {
+        TokenSource?.Dispose();
+        TokenSource = null;
+    }
+
+
 
     #endregion
 }

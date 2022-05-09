@@ -21,17 +21,17 @@ public class DogPathfinding : MonoBehaviour
     public int _gridHeight;
     public int _gridDetail;
     public Vector3 gridOffset;
-    public List<Transform> _obstacles;
     List<int2> _unWalkableFInt2List;
 
 
     void Start()
     {
-        _unWalkableFInt2List = GetUnwalkableInt2s(_obstacles);
+        _unWalkableFInt2List = GetUnwalkableInt2s(ObstacleManager.Instance.AllObstacles);
     }
 
     void OnDrawGizmos()
     {
+
         Gizmos.color = Color.red;
         for (int x = 0; x < _gridWidth * _gridDetail; x++)
         {
@@ -40,8 +40,7 @@ public class DogPathfinding : MonoBehaviour
                 var pos = new Vector3(x, 0, z) / _gridDetail + gridOffset;
                 var scale = new Vector3(1, 0.1f, 1) / _gridDetail;
 
-                if (Helper.IsPointWalkable(pos, _obstacles)) Gizmos.DrawWireCube(pos, scale);
-
+                Gizmos.DrawWireCube(pos, scale);
             }
         }
     }
@@ -61,7 +60,7 @@ public class DogPathfinding : MonoBehaviour
             }
         }
 
-        return newList;
+    return newList;
     }
 
 
