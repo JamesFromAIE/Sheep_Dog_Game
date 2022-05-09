@@ -6,6 +6,21 @@ using Unity.Collections;
 
 public static class Helper 
 {
+    public static bool IsPointWalkable(Vector3 point, List<Transform> obj)
+    {
+        foreach (Transform t in obj)
+        {
+            if (t.TryGetComponent(out Collider col))
+            {
+                Bounds bounds = col.bounds;
+                if (bounds.Contains(point)) return false;
+            }
+        }
+
+        return true; // NO TRANSFORMS IN THE LIST
+
+    }
+
     public static bool AreListsMatching<T>(this List<T> firstList, List<T> secondList)
     {
         if (firstList.Count != secondList.Count) return false; // IF COUNT SIN'T EQUAL, FALSE

@@ -21,7 +21,10 @@ public class DogManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)) && SelectedDictionary.Instance.SelectedTable.Count > 0)
+            if (Physics.Raycast(ray, out hit, 100.0f, (1 << 6))) return; // IF RAYCAST HITS OBSTACLE, STOP!!!
+
+            if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)) && 
+                SelectedDictionary.Instance.SelectedTable.Count > 0)
             {
                 var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
 
@@ -35,8 +38,7 @@ public class DogManager : MonoBehaviour
 
                     var pathList = DogPathfinding.Instance.GetVector3Path
                                                             (dog.transform.position - DogPathfinding.Instance.gridOffset, 
-                                                            hit.point - DogPathfinding.Instance.gridOffset, 
-                                                            new List<Vector3>());
+                                                             hit.point - DogPathfinding.Instance.gridOffset);
 
                     if (pathList == null) Debug.LogError("There is NO path in this list");
                     else 

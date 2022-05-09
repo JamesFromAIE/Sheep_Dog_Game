@@ -15,6 +15,8 @@ public class Dog : MonoBehaviour
     public DogStates State { get; private set; } = DogStates.Idle;
 
     public List<Vector3> PreviousPath { get; private set; } = new List<Vector3>();
+    Vector3 _currentVelocity;
+    [SerializeField] float _turnTime;
     
 
 
@@ -93,6 +95,7 @@ public class Dog : MonoBehaviour
         while (Time.time < end)
         {
             transform.position = Vector3.MoveTowards(transform.position, destination, MoveSpeed * Time.deltaTime);
+            transform.forward = Vector3.SmoothDamp(transform.forward, destination - transform.position, ref _currentVelocity, _turnTime);
             await Task.Yield();
 
             if (token.IsCancellationRequested)

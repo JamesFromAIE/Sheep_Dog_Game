@@ -19,31 +19,61 @@ public class DogPathfinding : MonoBehaviour
 
     public int _gridWidth;
     public int _gridHeight;
+    public int _gridDetail;
     public Vector3 gridOffset;
+    public List<Transform> _obstacles;
+    List<int2> _unWalkableFInt2List;
 
+
+    void Start()
+    {
+        _unWalkableFInt2List = GetUnwalkableInt2s(_obstacles);
+    }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        for (int x = 0; x < _gridWidth; x++)
+        for (int x = 0; x < _gridWidth * _gridDetail; x++)
         {
-            for (int z = 0; z < _gridHeight; z++)
+            for (int z = 0; z < _gridHeight * _gridDetail; z++)
             {
-                Gizmos.DrawWireCube(new Vector3(x, 0, z) + gridOffset, new Vector3(1, 0.1f, 1));
+                var pos = new Vector3(x, 0, z) / _gridDetail + gridOffset;
+                var scale = new Vector3(1, 0.1f, 1) / _gridDetail;
+
+                if (Helper.IsPointWalkable(pos, _obstacles)) Gizmos.DrawWireCube(pos, scale);
+
             }
         }
     }
 
+    List<int2> GetUnwalkableInt2s(List<Transform> obstacles)
+    {
+        List<int2> newList = new List<int2>();
 
-    public List<Vector3> GetVector3Path(Vector3 startingPosition, Vector3 endPosition, List<Vector3> unWalkablePositions)
+        for (int x = 0; x < _gridWidth * _gridDetail; x++)
+        {
+            for (int z = 0; z < _gridHeight * _gridDetail; z++)
+            {
+                var pos = new Vector3(x, 0, z) / _gridDetail + gridOffset;
+
+                if (!Helper.IsPointWalkable(pos, obstacles)) newList.Add(pos.V3ToInt2());
+
+            }
+        }
+
+        return newList;
+    }
+
+
+    public List<Vector3> GetVector3Path(Vector3 startingPosition, Vector3 endPosition)
     {
         NativeArray<int2> pathResult = new NativeArray<int2>(200, Allocator.Persistent);
 
-        NativeArray<int2> unWalkableInt2s = new NativeArray<int2>(unWalkablePositions.Count, Allocator.Persistent);
+        NativeArray<int2> unWalkableInt2s = new NativeArray<int2>(_unWalkableFInt2List.Count, Allocator.Persistent);
 
-        for (int i = 0; i < unWalkablePositions.Count; i++)
+        for (int i = 0; i < _unWalkableFInt2List.Count; i++)
         {
-            unWalkableInt2s[i] = unWalkablePositions[i].V3ToInt2();
+            unWalkableInt2s[i] = _unWalkableFInt2List[i] - gridOffset.V3ToInt2();
         }
 
         FindPathJob findPathJob = new FindPathJob
@@ -51,6 +81,7 @@ public class DogPathfinding : MonoBehaviour
             startingPosition = startingPosition.V3ToInt2(),
             endPosition = endPosition.V3ToInt2(),
             unWalkables = unWalkableInt2s,
+            gridDetail = _gridDetail,
             result = pathResult,
         };
 
@@ -65,6 +96,9 @@ public class DogPathfinding : MonoBehaviour
         for (int i = 0; i < finalPath.Count; i++)
         {
             finalPath[i] += gridOffset;
+            finalPath[i] /= _gridDetail;
+            
+            
             //finalPath[i].ShuffleV3();
         }
 
@@ -85,10 +119,11 @@ public class DogPathfinding : MonoBehaviour
         public int2 endPosition;
         [ReadOnly] public NativeArray<int2> unWalkables;
         public NativeArray<int2> result;
+        public int gridDetail;
 
         public void Execute()
         {
-            int2 gridSize = new int2(45, 45); // CHANGE TO MATCH THE INSPECTOR
+            int2 gridSize = new int2(36, 33) * gridDetail; // CHANGE TO MATCH THE INSPECTOR
 
             NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
 
@@ -299,6 +334,8 @@ public class DogPathfinding : MonoBehaviour
             return lowestCodePathNode.index;
         }
     }
+
+    
 
 
    

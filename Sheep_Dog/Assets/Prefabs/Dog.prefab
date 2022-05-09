@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 20
   _selectedCircle: {fileID: 6071323207066255163}
+  _turnTime: 0.1
 --- !u!135 &1686910747811591948
 SphereCollider:
   m_ObjectHideFlags: 0
