@@ -30,8 +30,8 @@ public class DogPathfinding : MonoBehaviour
 
     void OnDrawGizmos()
     {
-
         Gizmos.color = Color.red;
+        //var detailOffset = 1 / _gridDetail;
         for (int x = 0; x < _gridWidth * _gridDetail; x++)
         {
             for (int z = 0; z < _gridHeight * _gridDetail; z++)
@@ -95,8 +95,9 @@ public class DogPathfinding : MonoBehaviour
 
         for (int i = 0; i < finalPath.Count; i++)
         {
-            finalPath[i] += gridOffset;
             finalPath[i] /= _gridDetail;
+            finalPath[i] += gridOffset;
+            //
             
             
             //finalPath[i].ShuffleV3();

@@ -608,8 +608,8 @@ MonoBehaviour:
   Behaviour: {fileID: 11400000, guid: 24462984f306fc64bbb7dd37deba02fc, type: 2}
   DriveFactor: 10
   MaxSpeed: 20
-  NeighbourRadius: 0.9
-  AvoidanceRadiusMultiplier: 0.7
+  NeighbourRadius: 1.1
+  AvoidanceRadiusMultiplier: 0.85
 --- !u!4 &273542723
 Transform:
   m_ObjectHideFlags: 0
