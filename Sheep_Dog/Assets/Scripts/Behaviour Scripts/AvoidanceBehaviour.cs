@@ -19,17 +19,35 @@ public class AvoidanceBehaviour : FilteredFlockBehaviour
         {
             float objDist;
             var agentScript = item.GetComponent<FlockAgent>();
+            var dogScript = item.GetComponent<Dog>();
             var agentPos = agent.transform.position;
             var collPoint = item.GetComponent<Collider>().ClosestPoint(agentPos);
 
-            if (agentScript != null) objDist = Vector3.SqrMagnitude(item.position - agentPos); // IF TRANSFORM is AGENT...
-            else objDist = Vector3.SqrMagnitude(collPoint - agentPos); // IF TRANSFORM is NOT AGENT...
-
-            if (objDist < flock.SquareAvoidanceRadius)
+            if (agentScript == null && dogScript == null)
             {
-                nAvoid++;
-                avoidanceMove += agent.transform.position - item.position;
+                objDist = Vector3.SqrMagnitude(collPoint - agentPos); // IF TRANSFORM is WALL OR OBSTACLE
+
+                if (objDist < flock.SquareAvoidanceRadius)
+                {
+                    nAvoid++;
+                    avoidanceMove += agent.transform.position - collPoint; // IF TRANSFORM is OBSTACLE OR WALL
+                }
             }
+            else
+            {
+
+                if (agentScript != null) objDist = Vector3.SqrMagnitude(item.position - agentPos); // IF TRANSFORM is AGENT
+                else objDist = Vector3.SqrMagnitude(collPoint - agentPos); // IF TRANSFORM is DOG
+
+
+                if (objDist < flock.SquareAvoidanceRadius)
+                {
+                    nAvoid++;
+                    avoidanceMove += agent.transform.position - item.position;
+                }
+
+            }
+                
         }
 
         if (nAvoid > 0) avoidanceMove /= nAvoid;

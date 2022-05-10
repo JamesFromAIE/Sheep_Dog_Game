@@ -23,8 +23,7 @@ public class DogPathfinding : MonoBehaviour
     public Vector3 gridOffset;
     List<int2> _unWalkableFInt2List;
 
-
-    void Start()
+    public void SetNewUnWalkablesList()
     {
         _unWalkableFInt2List = GetUnwalkableInt2s(ObstacleManager.Instance.AllObstacles);
     }
@@ -80,6 +79,8 @@ public class DogPathfinding : MonoBehaviour
             startingPosition = startingPosition.V3ToInt2(),
             endPosition = endPosition.V3ToInt2(),
             unWalkables = unWalkableInt2s,
+            gridWidth = _gridWidth,
+            gridHeight = _gridHeight,
             gridDetail = _gridDetail,
             result = pathResult,
         };
@@ -118,11 +119,13 @@ public class DogPathfinding : MonoBehaviour
         public int2 endPosition;
         [ReadOnly] public NativeArray<int2> unWalkables;
         public NativeArray<int2> result;
+        public int gridWidth;
+        public int gridHeight;
         public int gridDetail;
 
         public void Execute()
         {
-            int2 gridSize = new int2(36, 33) * gridDetail; // CHANGE TO MATCH THE INSPECTOR
+            int2 gridSize = new int2(gridWidth, gridHeight) * gridDetail; // CHANGE TO MATCH THE INSPECTOR
 
             NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
 

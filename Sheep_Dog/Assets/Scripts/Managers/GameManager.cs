@@ -7,9 +7,15 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public GameState State;
 
+    public int GameScore { get; private set; } = 0;
+    [Range(1, 100)]
+    public int AgentCount = 50;
+    int _startingCount;
+
     void Awake()
     {
         Instance = this;
+        _startingCount = AgentCount;
     }
 
     void Start()
@@ -30,6 +36,7 @@ public class GameManager : MonoBehaviour
                 Flock.Instance.SpawnNewFlock();
                 ObstacleManager.Instance.SpawnObstacles();
                 DogManager.Instance.SpawnDogs();
+                DogPathfinding.Instance.SetNewUnWalkablesList();
                 UIManager.Instance.InitialiseUI();
 
                 UpdateGameState(GameState.Playing);
@@ -47,6 +54,26 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 break;
         }
+    }
+
+    public void IncreaseGameScore(int value)
+    {
+        GameScore += value;
+    }
+
+    public void ResetGameScore()
+    {
+        GameScore = 0;
+    }
+
+    public void IncreaseAgentCount(int value)
+    {
+        AgentCount += value;
+    }
+
+    public void ResetAgentCount()
+    {
+        AgentCount = _startingCount;
     }
 
 

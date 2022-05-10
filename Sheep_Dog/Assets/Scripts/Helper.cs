@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 using Unity.Collections;
+using UnityEngine.EventSystems;
 
 public static class Helper 
 {
+    private static PointerEventData _eventDataCurrentPosition;
+    private static List<RaycastResult> _results;
+    public static bool isOverUI()
+    {
+        _eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        _results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(_eventDataCurrentPosition, _results);
+        return _results.Count > 0;
+    }
+
     public static void DeleteChildren(this Transform t)
     {
         foreach (Transform child in t) Object.Destroy(child.gameObject);
@@ -21,6 +32,13 @@ public static class Helper
 
         return true; // NO TRANSFORMS IN THE LIST
 
+    }
+
+    public static T GetRandomValue<T>(List<T> list)
+    {
+        int index = UnityEngine.Random.Range(0, list.Count);
+
+        return list[index];
     }
 
     public static bool AreListsMatching<T>(this List<T> firstList, List<T> secondList)

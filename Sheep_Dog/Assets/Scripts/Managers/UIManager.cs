@@ -12,13 +12,14 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        _startingTimer = _maxTimer;
     }
 
     [Header("Playing UI")]
     [SerializeField] GameObject _allPlayingUI;
-    [SerializeField] TextMeshProUGUI _countText;
-    [SerializeField] TextMeshProUGUI _timerText;
-    [SerializeField] int _startingTimer;
+    [SerializeField] TextMeshProUGUI _countText, _timerText, _scoreText;
+    [SerializeField] int _maxTimer;
+    int _startingTimer;
     float _runningTimer;
     
 
@@ -31,14 +32,17 @@ public class UIManager : MonoBehaviour
     [Header("Failure UI")]
     [SerializeField] GameObject _allFailureUI;
 
+    public int _sheepCount { get; private set; }
+    public int _maxSheep { get; private set; }
+
     public void InitialiseUI()
     {
-        UpdateUI();
+        _sheepCount = 0;
+        _maxSheep = GameManager.Instance.AgentCount;
         _runningTimer = _startingTimer;
+        UpdateUI();
+        
     }
-
-    public int _sheepCount { get; private set; }
-    public int _maxSheep;
 
     void Update()
     {
@@ -71,6 +75,7 @@ public class UIManager : MonoBehaviour
     void UpdateUI()
     {
         _countText.text = _sheepCount + "/" + _maxSheep;
+        _scoreText.text = "Score: " + GameManager.Instance.GameScore;
     }
 
     public void IncrementCapturedSheep()
@@ -92,13 +97,45 @@ public class UIManager : MonoBehaviour
         _timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void RestartScene()
+    public void NextLevel()
     {
-        SceneManager.LoadScene(0);
+        GameManager.Instance.IncreaseGameScore(1);
+        GameManager.Instance.IncreaseAgentCount(5);
+
+        if (GameManager.Instance.GameScore % 3 == 0) // EVERY 3 ROUNDS...
+        {
+            ObstacleManager.Instance.IncreaseObstacleCount(1);
+            DecreaseStartingTime(10);
+        }
+
+        GameManager.Instance.UpdateGameState(GameState.GenerateLevel);
+    }
+
+    public void RestartLevel()
+    {
+        GameManager.Instance.ResetGameScore();
+        GameManager.Instance.ResetAgentCount();
+
+        ResetStartingTimer();
+        ObstacleManager.Instance.ResetObstacleCount();
+
+        GameManager.Instance.UpdateGameState(GameState.GenerateLevel);
+    }
+
+    void ResetStartingTimer()
+    {
+        _startingTimer = _maxTimer;
+    }
+
+    void DecreaseStartingTime(int value)
+    {
+        if (_startingTimer > 60)
+            _startingTimer -= value;
     }
 
     public void Quit()
     {
-        Application.Quit();
+        Debug.Log("Back");
+        SceneManager.LoadScene(0);
     }
 }

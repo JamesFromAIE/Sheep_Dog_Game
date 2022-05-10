@@ -94,6 +94,8 @@ public class DogManager : MonoBehaviour
         }
     }
 
+    
+
 }
 
 public enum DogStates

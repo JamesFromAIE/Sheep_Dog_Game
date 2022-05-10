@@ -25,7 +25,7 @@ public class GlobalSelection : MonoBehaviour
         }
 
         //2. when mouse button comes up
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && !Helper.isOverUI())
         {
             Ray ray = Camera.main.ScreenPointToRay(_p1);
 
@@ -45,7 +45,23 @@ public class GlobalSelection : MonoBehaviour
             }
 
         }
-       
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectDogIndex(0);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SelectDogIndex(1);
+
+    }
+
+    public void SelectDogIndex(int index)
+    {
+        var dog = DogManager.Instance.AllDogs[index];
+
+        if (_selectedTable.SelectedTable.ContainsKey(dog.GetInstanceID())) return;
+
+        _selectedTable.DeselectAll();
+
+        _selectedTable.AddSelected(dog);
+
     }
 
 }

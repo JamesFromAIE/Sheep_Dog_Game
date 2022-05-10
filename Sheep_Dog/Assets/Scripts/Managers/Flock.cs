@@ -18,8 +18,6 @@ public class Flock : MonoBehaviour
     List<FlockAgent> _agents = new List<FlockAgent>();
     public FlockBehaviour Behaviour;
 
-    [Range(1, 100)]
-    public int StartingCount = 50;
     const float AgentDensity = 0.1f;
 
     [Range(1f, 100f)]
@@ -49,13 +47,19 @@ public class Flock : MonoBehaviour
 
         transform.DeleteChildren();
 
+        int spawnCount;
+
+        if (GameManager.Instance != null) spawnCount = GameManager.Instance.AgentCount;
+        else spawnCount = MenuManager.Instance.AgentCount;
+
+
         _squareMaxSpeed = MaxSpeed * MaxSpeed;
         _squareNeighbourRadius = NeighbourRadius * NeighbourRadius;
         _squareAvoidanceRadius = _squareNeighbourRadius * AvoidanceRadiusMultiplier * AvoidanceRadiusMultiplier;
 
-        for (int i = 0; i < StartingCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
-            var randPosV3 = (UnityEngine.Random.insideUnitCircle * StartingCount * AgentDensity).ConvertV2ToV3() + transform.position;
+            var randPosV3 = (UnityEngine.Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + transform.position;
 
             FlockAgent newAgent = Instantiate(
                 AgentPrefab,
