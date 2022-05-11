@@ -8,13 +8,13 @@ public class SelectionComponent : MonoBehaviour
     void Start()
     {
         if (!TryGetComponent(out Dog dog)) return;
-        else dog.WorkerSelected(true);
+        else dog.DogSelected(true);
 
     }
 
     private void OnDestroy()
     {
         if (!TryGetComponent(out Dog dog)) return;
-        else dog.WorkerSelected(false);
+        else dog.DogSelected(false);
     }
 }

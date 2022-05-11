@@ -4,9 +4,11 @@ using UnityEngine;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.AI;
 
 public class Dog : MonoBehaviour
 {
+    [SerializeField] NavMeshAgent NMAgent;
     public float MoveSpeed;
     [SerializeField] MeshRenderer _selectedCircle;
     public bool IsSelected { get; private set; } = false;
@@ -17,11 +19,17 @@ public class Dog : MonoBehaviour
     public List<Vector3> PreviousPath { get; private set; } = new List<Vector3>();
     Vector3 _currentVelocity;
     [SerializeField] float _turnTime;
-    
+
 
 
     #region Public Methods
 
+    public void MoveNVAgent(Vector3 destination)
+    {
+        NMAgent.SetDestination(destination);
+        var lookDir = destination - transform.position;
+        transform.forward = lookDir.FlattenLookDirection();
+    }
     public void ChangeDogState(DogStates newState)
     {
         switch (newState)
@@ -75,7 +83,7 @@ public class Dog : MonoBehaviour
         ChangeDogState(DogStates.Idle);
     }
 
-    public void WorkerSelected(bool condition)
+    public void DogSelected(bool condition)
     {
         IsSelected = condition;
         _selectedCircle.enabled = condition;

@@ -80,6 +80,21 @@ public class DogManager : MonoBehaviour
 
                     dog.TokenSource?.Cancel();
 
+                    //------------------------------------------------------------
+                    //NEW PATHFINDING WITH NAVMESH
+
+                    var destination = hit.point;
+
+                    if (Vector3.Distance(destination, transform.position) > 1)
+                        dog.MoveNVAgent(destination);
+
+                    //------------------------------------------------------------
+
+
+
+                    /*
+                    ------------------------------------------------------------
+                    // OLD PATHFINDING WITH A*
                     var pathList = DogPathfinding.Instance.GetVector3Path
                                                             (dog.transform.position - DogPathfinding.Instance.gridOffset, 
                                                              hit.point - DogPathfinding.Instance.gridOffset);
@@ -89,6 +104,8 @@ public class DogManager : MonoBehaviour
                     {
                         dog.MoveDogToPositionList(pathList);
                     }
+                    ------------------------------------------------------------
+                    */
                 }
             }
         }

@@ -30,6 +30,7 @@ public class DogPathfinding : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        /*
         Gizmos.color = Color.red;
         //var detailOffset = 1 / _gridDetail;
         for (int x = 0; x < _gridWidth * _gridDetail; x++)
@@ -42,6 +43,7 @@ public class DogPathfinding : MonoBehaviour
                 Gizmos.DrawWireCube(pos, scale);
             }
         }
+        */
     }
 
     List<int2> GetUnwalkableInt2s(List<Transform> obstacles)

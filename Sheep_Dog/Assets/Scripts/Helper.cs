@@ -17,6 +17,15 @@ public static class Helper
         return _results.Count > 0;
     }
 
+    public static Vector3 FlattenLookDirection(this Vector3 dir)
+    {
+        var newX = dir.x;
+        var newY = 0;
+        var newZ = dir.z;
+
+        return new Vector3 (newX, newY, newZ);
+    }
+
     public static void DeleteChildren(this Transform t)
     {
         foreach (Transform child in t) Object.Destroy(child.gameObject);

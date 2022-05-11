@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
+    //[SerializeField] NavMeshSurface _surface;
+
     public static GameManager Instance;
     public GameState State;
 
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
                 DogManager.Instance.SpawnDogs();
                 DogPathfinding.Instance.SetNewUnWalkablesList();
                 UIManager.Instance.InitialiseUI();
+                //_surface.BuildNavMesh();
 
                 UpdateGameState(GameState.Playing);
                 break;
