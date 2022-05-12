@@ -8,6 +8,7 @@ public class FlockAgent : MonoBehaviour
     public AgentState _agentState;
     public float MoveSpeed;
     Flock _agentFlock;
+    float _bleetFactor;
     public Flock AgentFlock { get { return _agentFlock; } }
 
     Collider _agentCollider;
@@ -25,7 +26,7 @@ public class FlockAgent : MonoBehaviour
 
     void Update()
     {
-
+        if (Random.value < _bleetFactor) AudioManager.Instance.PlaySheepBleet();
     }
 
     public void ChangeAgentState(AgentState newState)
@@ -35,10 +36,10 @@ public class FlockAgent : MonoBehaviour
         switch (_agentState)
         {
             case AgentState.Idle:
-
+                _bleetFactor = 0.001f;
                 break;
             case AgentState.Scared:
-
+                _bleetFactor = 0.005f;
                 break;
         }
     }

@@ -14,6 +14,8 @@ public class DogManager : MonoBehaviour
     public LayerMask invalidMasks;
 
     public List<Dog> AllDogs { get; private set; } = new List<Dog>();
+    [SerializeField] AudioClip[] _selectDogClips;
+    public bool DogIsMoving;
 
     void Awake() => Instance = this;
 
@@ -44,6 +46,7 @@ public class DogManager : MonoBehaviour
             var newDog = Instantiate(dogPrefab, randPos, Quaternion.identity, transform);
 
             newDog.name = "Dog " + i;
+            newDog._selectSound = _selectDogClips[i];
             AllDogs.Add(newDog);
         }
     }
@@ -65,7 +68,19 @@ public class DogManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100.0f, invalidMasks)) return; // IF RAYCAST HITS OBSTACLE, STOP!!!
+            if (Physics.Raycast(ray, out hit, 100.0f, invalidMasks))
+            {
+                var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
+
+                for (int i = 0; i < dogs.Length; i++)
+                {
+                    var dog = dogs[i];
+                    dog.MoveNVAgent(dog.transform.position);
+                }
+
+                return;
+            }
+
 
             if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)) && 
                 SelectedDictionary.Instance.SelectedTable.Count > 0)
@@ -85,8 +100,9 @@ public class DogManager : MonoBehaviour
 
                     var destination = hit.point;
 
-                    if (Vector3.Distance(destination, transform.position) > 1)
-                        dog.MoveNVAgent(destination);
+                    dog.MoveNVAgent(destination);
+
+                        
 
                     //------------------------------------------------------------
 
@@ -107,6 +123,16 @@ public class DogManager : MonoBehaviour
                     ------------------------------------------------------------
                     */
                 }
+            }
+        }
+        else
+        {
+            var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
+
+            for (int i = 0; i < dogs.Length; i++)
+            {
+                var dog = dogs[i];
+                dog.MoveNVAgent(dog.transform.position);
             }
         }
     }

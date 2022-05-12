@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 using Unity.Mathematics;
 using Unity.Collections;
 using UnityEngine.EventSystems;
@@ -15,6 +16,22 @@ public static class Helper
         _results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(_eventDataCurrentPosition, _results);
         return _results.Count > 0;
+    }
+
+    public static void PlayClip(this AudioSource source, AudioClip clip)
+    {
+        source.Stop();
+        source.clip = clip;
+        source.Play();
+    }
+    public static void PlayClip(this AudioSource source, AudioClip clip, float pitchFactor)
+    {
+        source.Stop();
+        source.pitch += pitchFactor;
+        source.clip = clip;
+        source.Play();
+
+        source.pitch -= pitchFactor;
     }
 
     public static Vector3 FlattenLookDirection(this Vector3 dir)

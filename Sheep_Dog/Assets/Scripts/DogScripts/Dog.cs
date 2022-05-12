@@ -16,32 +16,53 @@ public class Dog : MonoBehaviour
     public bool IsSitting { get; private set; }
     public DogStates State { get; private set; } = DogStates.Idle;
 
+    [SerializeField] AudioSource _audSource;
+    public AudioClip _selectSound;
+
     public List<Vector3> PreviousPath { get; private set; } = new List<Vector3>();
     Vector3 _currentVelocity;
     [SerializeField] float _turnTime;
-
-
 
     #region Public Methods
 
     public void MoveNVAgent(Vector3 destination)
     {
-        NMAgent.SetDestination(destination);
-        var lookDir = destination - transform.position;
-        transform.forward = lookDir.FlattenLookDirection();
+        if (IsSitting)
+        {
+            NMAgent.SetDestination(transform.position);
+            return;
+        }
+
+        if (Vector3.Distance(transform.position, destination) < 0.2f)
+        {
+            NMAgent.SetDestination(transform.position);
+            ChangeDogState(DogStates.Idle);
+            
+        }
+        else
+        {
+            NMAgent.SetDestination(destination);
+            var lookDir = destination - transform.position;
+            transform.forward = lookDir.FlattenLookDirection();
+            ChangeDogState(DogStates.Moving);
+        }
+        
     }
     public void ChangeDogState(DogStates newState)
     {
         switch (newState)
         {
             case DogStates.Idle:
+                AudioManager.Instance.PlayDogRun(false);
                 IsSitting = false;
                 break;
             case DogStates.Sitting:
+                AudioManager.Instance.PlayDogRun(false);
                 IsSitting = true;
                 break;
 
             case DogStates.Moving:
+                AudioManager.Instance.PlayDogRun(true);
                 IsSitting = false;
                 break;
         }
@@ -87,6 +108,7 @@ public class Dog : MonoBehaviour
     {
         IsSelected = condition;
         _selectedCircle.enabled = condition;
+        if (condition) _audSource.PlayClip(_selectSound);
     }
 
     public async void StallFunction(int time)
