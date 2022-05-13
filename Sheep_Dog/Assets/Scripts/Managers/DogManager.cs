@@ -63,7 +63,7 @@ public class DogManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && !Helper.isOverUI()) // RECENTLY CHANGED FROM RMB TO LMB FOR MOBILE USE
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

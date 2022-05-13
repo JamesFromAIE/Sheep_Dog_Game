@@ -18,6 +18,7 @@ public class GlobalSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         //1. when left mouse button clicked (but not released)
         if (Input.GetMouseButtonDown(0))
         {
@@ -45,6 +46,7 @@ public class GlobalSelection : MonoBehaviour
             }
 
         }
+        */
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) SelectDogIndex(0);
 
