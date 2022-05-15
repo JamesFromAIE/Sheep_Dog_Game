@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
-    //[SerializeField] NavMeshSurface _surface;
+    [SerializeField] NavMeshSurface _surface;
 
     public static GameManager Instance;
     public GameState State;
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         switch (State)
         {
             case GameState.GenerateLevel:
+                SelectedDictionary.Instance.DeselectAll();
                 Flock.Instance.SpawnNewFlock();
                 ObstacleManager.Instance.SpawnObstacles();
                 DogManager.Instance.SpawnDogs();

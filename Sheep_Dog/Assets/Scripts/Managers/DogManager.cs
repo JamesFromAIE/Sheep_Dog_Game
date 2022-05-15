@@ -63,7 +63,7 @@ public class DogManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(1) && !Helper.isOverUI()) // RECENTLY CHANGED FROM RMB TO LMB FOR MOBILE USE
+        if (Input.GetMouseButton(0) && !Helper.isOverUI()) // RECENTLY CHANGED FROM RMB TO LMB FOR MOBILE USE
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -72,11 +72,7 @@ public class DogManager : MonoBehaviour
             {
                 var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
 
-                for (int i = 0; i < dogs.Length; i++)
-                {
-                    var dog = dogs[i];
-                    dog.MoveNVAgent(dog.transform.position);
-                }
+                if (dogs.Length > 0) dogs[0].MoveNVAgent(dogs[0].transform.position);
 
                 return;
             }
@@ -129,11 +125,7 @@ public class DogManager : MonoBehaviour
         {
             var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
 
-            for (int i = 0; i < dogs.Length; i++)
-            {
-                var dog = dogs[i];
-                dog.MoveNVAgent(dog.transform.position);
-            }
+            if (dogs.Length > 0) dogs[0].MoveNVAgent(dogs[0].transform.position);
         }
     }
 
