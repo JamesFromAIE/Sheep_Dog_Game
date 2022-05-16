@@ -89,6 +89,22 @@ public class @TouchControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PausePC"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ea52440-0e82-49a5-b045-b6ea7ad263fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PauseMobile"",
+                    ""type"": ""Button"",
+                    ""id"": ""f22b82b3-9476-41d8-accf-4366e7c4f83f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -190,6 +206,28 @@ public class @TouchControls : IInputActionCollection, IDisposable
                     ""action"": ""TouchSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83458ac5-b59b-4e36-8092-462918c9a2e9"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PausePC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""82ae60c7-efe2-4082-ac63-66d1193f4017"",
+                    ""path"": ""*/{Back}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMobile"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -207,6 +245,8 @@ public class @TouchControls : IInputActionCollection, IDisposable
         m_TouchPC_SelectDog1 = m_TouchPC.FindAction("SelectDog1", throwIfNotFound: true);
         m_TouchPC_SelectDog2 = m_TouchPC.FindAction("SelectDog2", throwIfNotFound: true);
         m_TouchPC_MousePosition = m_TouchPC.FindAction("MousePosition", throwIfNotFound: true);
+        m_TouchPC_PausePC = m_TouchPC.FindAction("PausePC", throwIfNotFound: true);
+        m_TouchPC_PauseMobile = m_TouchPC.FindAction("PauseMobile", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -265,6 +305,8 @@ public class @TouchControls : IInputActionCollection, IDisposable
     private readonly InputAction m_TouchPC_SelectDog1;
     private readonly InputAction m_TouchPC_SelectDog2;
     private readonly InputAction m_TouchPC_MousePosition;
+    private readonly InputAction m_TouchPC_PausePC;
+    private readonly InputAction m_TouchPC_PauseMobile;
     public struct TouchPCActions
     {
         private @TouchControls m_Wrapper;
@@ -278,6 +320,8 @@ public class @TouchControls : IInputActionCollection, IDisposable
         public InputAction @SelectDog1 => m_Wrapper.m_TouchPC_SelectDog1;
         public InputAction @SelectDog2 => m_Wrapper.m_TouchPC_SelectDog2;
         public InputAction @MousePosition => m_Wrapper.m_TouchPC_MousePosition;
+        public InputAction @PausePC => m_Wrapper.m_TouchPC_PausePC;
+        public InputAction @PauseMobile => m_Wrapper.m_TouchPC_PauseMobile;
         public InputActionMap Get() { return m_Wrapper.m_TouchPC; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -314,6 +358,12 @@ public class @TouchControls : IInputActionCollection, IDisposable
                 @MousePosition.started -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnMousePosition;
+                @PausePC.started -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnPausePC;
+                @PausePC.performed -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnPausePC;
+                @PausePC.canceled -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnPausePC;
+                @PauseMobile.started -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnPauseMobile;
+                @PauseMobile.performed -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnPauseMobile;
+                @PauseMobile.canceled -= m_Wrapper.m_TouchPCActionsCallbackInterface.OnPauseMobile;
             }
             m_Wrapper.m_TouchPCActionsCallbackInterface = instance;
             if (instance != null)
@@ -345,6 +395,12 @@ public class @TouchControls : IInputActionCollection, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @PausePC.started += instance.OnPausePC;
+                @PausePC.performed += instance.OnPausePC;
+                @PausePC.canceled += instance.OnPausePC;
+                @PauseMobile.started += instance.OnPauseMobile;
+                @PauseMobile.performed += instance.OnPauseMobile;
+                @PauseMobile.canceled += instance.OnPauseMobile;
             }
         }
     }
@@ -360,5 +416,7 @@ public class @TouchControls : IInputActionCollection, IDisposable
         void OnSelectDog1(InputAction.CallbackContext context);
         void OnSelectDog2(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnPausePC(InputAction.CallbackContext context);
+        void OnPauseMobile(InputAction.CallbackContext context);
     }
 }

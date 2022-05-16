@@ -16,6 +16,9 @@ public class InputManager : MonoBehaviour
     public delegate void DogIsMovingEvent(bool isMoving);
     public event DogIsMovingEvent OnDogIsMoving;
 
+    public delegate void PauseGameEvent(GameState gameState);
+    public event PauseGameEvent OnPauseGame;
+
 
     private TouchControls _controls;
 
@@ -48,6 +51,7 @@ public class InputManager : MonoBehaviour
                 _controls.TouchPC.TouchPress.started += ctx => MoveDog(ctx);
                 _controls.TouchPC.TouchPress.canceled += ctx => StopDog(ctx);
                 _controls.TouchPC.TouchSelect.started += ctx => SelectDog(ctx);
+                _controls.TouchPC.PausePC.performed += ctx => PauseGame(ctx);
                 break;
             case Platform.PC:
                 _controls.TouchPC.SelectDog1.performed += ctx => SelectDog1(ctx);
@@ -55,23 +59,31 @@ public class InputManager : MonoBehaviour
                 _controls.TouchPC.MouseSelect.started += ctx => SelectDog(ctx);
                 _controls.TouchPC.MouseMove.started += ctx => MoveDog(ctx);
                 _controls.TouchPC.MouseMove.canceled += ctx => StopDog(ctx);
+                _controls.TouchPC.PausePC.performed += ctx => PauseGame(ctx);
                 break;
         }
     }
 
+    void PauseGame(InputAction.CallbackContext context)
+    {
+        if (OnPauseGame == null) return;
+
+        Debug.Log("Paused Game");
+
+        OnPauseGame(GameManager.Instance.State);
+    }
+
     void SelectDog1(InputAction.CallbackContext context)
     {
-        Debug.Log("Selected Dog 0");
-
         if (OnSelectDogKey == null || Helper.isOverUI(_controls, Platform)) return;
+
+        Debug.Log("Selected Dog 0");
 
         OnSelectDogKey(0);
     }
 
     void SelectDog2(InputAction.CallbackContext context)
     {
-        
-
         if (OnSelectDogKey == null || Helper.isOverUI(_controls, Platform)) return;
 
         Debug.Log("Selected Dog 1");
@@ -81,8 +93,6 @@ public class InputManager : MonoBehaviour
 
     void SelectDog(InputAction.CallbackContext context)
     {
-        
-
         if (OnSelectDogMouse == null || Helper.isOverUI(_controls, Platform)) return;
 
         Debug.Log("Selected Dog with Mouse");
@@ -92,8 +102,6 @@ public class InputManager : MonoBehaviour
 
     void MoveDog(InputAction.CallbackContext context)
     {
-        
-
         if (OnDogIsMoving == null || Helper.isOverUI(_controls, Platform)) return;
 
         Debug.Log("Started moving Dog");
@@ -103,8 +111,6 @@ public class InputManager : MonoBehaviour
 
     void StopDog(InputAction.CallbackContext context)
     {
-        
-
         if (OnDogIsMoving == null) return;
 
         Debug.Log("Stopped moving Dog");

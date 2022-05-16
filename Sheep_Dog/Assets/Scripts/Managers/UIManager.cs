@@ -8,10 +8,12 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
+    public static InputManager _inputManager;
 
     void Awake()
     {
         Instance = this;
+        _inputManager = InputManager.Instance;
         _startingTimer = _maxTimer;
     }
 
@@ -137,5 +139,15 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Back");
         SceneManager.LoadScene(0);
+    }
+
+    private void OnEnable()
+    {
+        _inputManager.OnPauseGame += TogglePauseState;
+    }
+
+    private void OnDisable()
+    {
+        _inputManager.OnPauseGame -= TogglePauseState;
     }
 }

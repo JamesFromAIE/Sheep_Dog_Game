@@ -76,6 +76,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "PausePC",
+                    "type": "Button",
+                    "id": "9ea52440-0e82-49a5-b045-b6ea7ad263fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PauseMobile",
+                    "type": "Button",
+                    "id": "f22b82b3-9476-41d8-accf-4366e7c4f83f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -175,6 +191,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "TouchSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83458ac5-b59b-4e36-8092-462918c9a2e9",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PausePC",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82ae60c7-efe2-4082-ac63-66d1193f4017",
+                    "path": "*/{Back}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseMobile",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
