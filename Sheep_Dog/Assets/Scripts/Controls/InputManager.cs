@@ -38,8 +38,8 @@ public class InputManager : MonoBehaviour
 
     void Start()
     {
-        Debug.LogWarning("Remove This when building!!!", this);
-        Platform = Platform.Mobile; // REMOVE THIS ON BUILD!!!
+        //Debug.LogWarning("Remove This when building!!!", this);
+        //Platform = Platform.Mobile; // REMOVE THIS ON BUILD!!!
 
         switch (Platform)
         {
