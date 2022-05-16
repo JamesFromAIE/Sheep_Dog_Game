@@ -5,17 +5,28 @@ using System.Threading;
 using Unity.Mathematics;
 using Unity.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public static class Helper 
 {
     private static PointerEventData _eventDataCurrentPosition;
     private static List<RaycastResult> _results;
-    public static bool isOverUI()
+    public static bool isOverUI(TouchControls controls, Platform platform)
     {
-        _eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        _eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = GetDogMoveRayOrigin(controls, platform)};
         _results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(_eventDataCurrentPosition, _results);
         return _results.Count > 0;
+    }
+
+    public static Vector2 GetDogMoveRayOrigin(TouchControls controls, Platform platform)
+    {
+        Vector2 position = Vector2.zero;
+
+        if (platform == Platform.Mobile) position = controls.TouchPC.TouchPosition.ReadValue<Vector2>();
+        else if (platform == Platform.PC) position = Mouse.current.position.ReadValue();
+
+        return position;
     }
 
     public static void PlayClip(this AudioSource source, AudioClip clip)

@@ -5,7 +5,13 @@ using UnityEngine;
 public class SelectedDictionary : MonoBehaviour
 {
     public static SelectedDictionary Instance;
-    void Awake() => Instance = this;
+    
+    void Awake()
+    {
+        Instance = this;
+
+    }
+
 
 
     public Dictionary<int, Dog> SelectedTable = new Dictionary<int, Dog>();

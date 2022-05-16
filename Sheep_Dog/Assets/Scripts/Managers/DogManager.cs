@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine.InputSystem;
 
 
 public class DogManager : MonoBehaviour
 {
     public static DogManager Instance;
+    InputManager _inputManager;
+    Platform _platform;
 
     [SerializeField] Dog dogPrefab;
 
@@ -15,9 +18,29 @@ public class DogManager : MonoBehaviour
 
     public List<Dog> AllDogs { get; private set; } = new List<Dog>();
     [SerializeField] AudioClip[] _selectDogClips;
-    public bool DogIsMoving;
+    public bool DogIsMoving = false;
 
-    void Awake() => Instance = this;
+    void Awake()
+    {
+        Instance = this;
+        _inputManager = InputManager.Instance;
+
+    }
+
+    private void OnEnable()
+    {
+        _inputManager.OnDogIsMoving += SetIsDogMoving;
+    }
+
+    private void OnDisable()
+    {
+        _inputManager.OnDogIsMoving -= SetIsDogMoving;
+    }
+
+    void SetIsDogMoving(bool condition)
+    {
+        DogIsMoving = condition;
+    }
 
     public void SpawnDogs()
     {
@@ -63,7 +86,56 @@ public class DogManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && !Helper.isOverUI()) // RECENTLY CHANGED FROM RMB TO LMB FOR MOBILE USE
+        GetAndSetDogDestinationNew();
+
+    }
+
+    void GetAndSetDogDestinationNew()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(_inputManager.GetDogMoveRayOrigin());
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100.0f, invalidMasks) || !DogIsMoving)
+        {
+            var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
+
+            if (dogs.Length > 0) dogs[0].MoveNVAgent(dogs[0].transform.position);
+
+            return;
+        }
+
+
+        if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)) &&
+            SelectedDictionary.Instance.SelectedTable.Count > 0)
+        {
+            var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
+
+            for (int i = 0; i < dogs.Length; i++)
+            {
+                var dog = dogs[i];
+
+                if (dog.IsSitting || !dog.IsSelected) continue;
+
+                dog.TokenSource?.Cancel();
+
+                //------------------------------------------------------------
+                //NEW PATHFINDING WITH NAVMESH
+
+                var destination = hit.point;
+
+                dog.MoveNVAgent(destination);
+
+
+
+                //------------------------------------------------------------
+            }
+        }
+    }
+
+
+    void GetAndSetDogDestination()
+    {
+        if (Input.GetMouseButton(0)) // RECENTLY CHANGED FROM RMB TO LMB FOR MOBILE USE
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -78,7 +150,7 @@ public class DogManager : MonoBehaviour
             }
 
 
-            if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)) && 
+            if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)) &&
                 SelectedDictionary.Instance.SelectedTable.Count > 0)
             {
                 var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
@@ -98,26 +170,9 @@ public class DogManager : MonoBehaviour
 
                     dog.MoveNVAgent(destination);
 
-                        
+
 
                     //------------------------------------------------------------
-
-
-
-                    /*
-                    ------------------------------------------------------------
-                    // OLD PATHFINDING WITH A*
-                    var pathList = DogPathfinding.Instance.GetVector3Path
-                                                            (dog.transform.position - DogPathfinding.Instance.gridOffset, 
-                                                             hit.point - DogPathfinding.Instance.gridOffset);
-
-                    if (pathList == null) Debug.LogError("There is NO path in this list");
-                    else 
-                    {
-                        dog.MoveDogToPositionList(pathList);
-                    }
-                    ------------------------------------------------------------
-                    */
                 }
             }
         }
@@ -128,7 +183,6 @@ public class DogManager : MonoBehaviour
             if (dogs.Length > 0) dogs[0].MoveNVAgent(dogs[0].transform.position);
         }
     }
-
     
 
 }

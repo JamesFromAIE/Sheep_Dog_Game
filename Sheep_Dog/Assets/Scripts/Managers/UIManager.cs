@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) TogglePauseState(GameManager.Instance.State);
+        //if (Input.GetKeyDown(KeyCode.Escape)) TogglePauseState(GameManager.Instance.State);
 
         _runningTimer -= Time.deltaTime;
         DisplayTime(_runningTimer);
