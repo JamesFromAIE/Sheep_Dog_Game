@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f4a9230d099ce41b0ffbea9d843678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentCount: 100
+  AgentCount: 40
   ControlsPage: {fileID: 911478854}
   CreditsPage: {fileID: 1196005082}
   BackButton: {fileID: 629228833}
@@ -2463,7 +2463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07270530b8c3b7a45b367c84ee1b22f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentPrefab: {fileID: 1616419603648058568, guid: 9716c0f6298dff942bf7450b54ae2f93, type: 3}
+  BaseAgentPrefab: {fileID: 1616419603648058568, guid: 9716c0f6298dff942bf7450b54ae2f93, type: 3}
+  AlternateAgentPrefab: {fileID: 1616419603648058568, guid: dcd9bfa63c2c1554c9dd831a50666079, type: 3}
   Behaviour: {fileID: 11400000, guid: 24462984f306fc64bbb7dd37deba02fc, type: 2}
   DriveFactor: 20
   MaxSpeed: 25

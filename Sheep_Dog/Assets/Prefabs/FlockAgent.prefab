@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1616419603648058566}
   - component: {fileID: 1616419603648058567}
   - component: {fileID: 1616419603648058568}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FlockAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5946e80b7c067cf4789c09b3ba516328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _agentState: 0
   MoveSpeed: 1
 --- !u!1001 &1616419603896660411
 PrefabInstance:
@@ -71,9 +72,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: SheepBody
       objectReference: {fileID: 0}
+    - target: {fileID: 485879359937949386, guid: a756bd3b79562584491faf08d6b54f23, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 567974616807206196, guid: a756bd3b79562584491faf08d6b54f23, type: 3}
       propertyPath: m_Name
       value: Sheep
+      objectReference: {fileID: 0}
+    - target: {fileID: 567974616807206196, guid: a756bd3b79562584491faf08d6b54f23, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 567974616807206197, guid: a756bd3b79562584491faf08d6b54f23, type: 3}
       propertyPath: m_RootOrder
@@ -142,6 +151,10 @@ PrefabInstance:
     - target: {fileID: 567974617161223636, guid: a756bd3b79562584491faf08d6b54f23, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 567974617161223639, guid: a756bd3b79562584491faf08d6b54f23, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4756088606619818427, guid: a756bd3b79562584491faf08d6b54f23, type: 3}
       propertyPath: m_Materials.Array.data[0]

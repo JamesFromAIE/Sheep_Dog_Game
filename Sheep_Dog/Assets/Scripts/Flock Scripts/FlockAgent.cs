@@ -6,7 +6,10 @@ using UnityEngine;
 public class FlockAgent : MonoBehaviour
 {
     public AgentState _agentState;
-    public float MoveSpeed;
+    
+    public float MoveSpeed = 1;
+
+    [SerializeField] float MoveModifier;
     Flock _agentFlock;
     float _bleetFactor;
     public Flock AgentFlock { get { return _agentFlock; } }
@@ -54,8 +57,12 @@ public class FlockAgent : MonoBehaviour
     {
         if (_agentState == AgentState.Scared)
         {
-            transform.forward = velocity * MoveSpeed;
-            transform.position += Time.deltaTime * MoveSpeed * velocity;
+            if (velocity != Vector3.zero)
+            {
+                transform.forward = velocity.normalized;
+                transform.position += Time.deltaTime * MoveSpeed * MoveModifier * velocity;
+            }
+                
         }
         else if (_agentState == AgentState.Idle)
         {
@@ -63,8 +70,11 @@ public class FlockAgent : MonoBehaviour
             {
                 MoveSpeed = Random.Range(1, 10) / 100;
             }
-            transform.forward = velocity * MoveSpeed;
-            transform.position += Time.deltaTime * MoveSpeed * velocity;
+            if (velocity != Vector3.zero)
+            {
+                transform.forward = velocity.normalized;
+                transform.position += Time.deltaTime * MoveSpeed * MoveModifier * velocity;
+            }
         }
         
     }

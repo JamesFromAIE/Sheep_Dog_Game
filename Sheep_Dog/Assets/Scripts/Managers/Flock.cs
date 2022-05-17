@@ -14,11 +14,12 @@ public class Flock : MonoBehaviour
 
     private void Awake() => Instance = this;
 
-    public FlockAgent AgentPrefab;
+    public FlockAgent BaseAgentPrefab;
+    public FlockAgent AlternateAgentPrefab;
     List<FlockAgent> _agents = new List<FlockAgent>();
     public FlockBehaviour Behaviour;
 
-    const float AgentDensity = 0.1f;
+    const float AgentDensity = .4f;
 
     [Range(1f, 100f)]
     public float DriveFactor = 10f; // Move Speed Multiplier for Agents
@@ -60,9 +61,10 @@ public class Flock : MonoBehaviour
         for (int i = 0; i < spawnCount; i++)
         {
             var randPosV3 = (UnityEngine.Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + transform.position;
+            var prefab = UnityEngine.Random.value > 0.8f ? AlternateAgentPrefab : BaseAgentPrefab;
 
             FlockAgent newAgent = Instantiate(
-                AgentPrefab,
+                prefab,
                 randPosV3,
                 Quaternion.Euler(Vector3.up * UnityEngine.Random.Range(0f, 360f)),
                 transform);
@@ -137,7 +139,7 @@ public class Flock : MonoBehaviour
             count++;
         }
 
-        var speed = 1f - (closestDistance / 7);
+        var speed = 1f - (closestDistance / 10);
         if (speed < 0.1f) speed = 0.1f;
 
         return speed;
