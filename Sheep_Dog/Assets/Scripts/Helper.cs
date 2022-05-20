@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 
 public static class Helper 
 {
+    private static Camera _camera = Camera.main;
     private static PointerEventData _eventDataCurrentPosition;
     private static List<RaycastResult> _results;
     public static bool isOverUI(TouchControls controls, Platform platform)
@@ -17,6 +18,13 @@ public static class Helper
         _results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(_eventDataCurrentPosition, _results);
         return _results.Count > 0;
+    }
+
+    public static Vector2 GetWorldPositionCanvasElement(RectTransform element)
+    {
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(element, element.position, _camera, out var result);
+
+        return result;
     }
 
     public static Vector2 GetDogMoveRayOrigin(TouchControls controls, Platform platform)
