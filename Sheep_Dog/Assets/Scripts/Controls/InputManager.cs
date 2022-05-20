@@ -48,9 +48,9 @@ public class InputManager : MonoBehaviour
         {
             case Platform.Mobile:
                 Debug.Log("Set Mobile Events");
-                _controls.TouchPC.TouchPress.started += ctx => MoveDog(ctx);
+                _controls.TouchPC.TouchPress.performed += ctx => MoveDog(ctx);
                 _controls.TouchPC.TouchPress.canceled += ctx => StopDog(ctx);
-                _controls.TouchPC.TouchSelect.started += ctx => SelectDog(ctx);
+                _controls.TouchPC.TouchPress.started += ctx => SelectDog(ctx);
                 _controls.TouchPC.PausePC.performed += ctx => PauseGame(ctx);
                 break;
             case Platform.PC:

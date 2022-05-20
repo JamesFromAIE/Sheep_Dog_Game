@@ -52,7 +52,7 @@ public class GlobalSelection : MonoBehaviour
         else //if we didnt _hit something
         {
 
-            _selectedTable.DeselectAll();
+            //_selectedTable.DeselectAll();
 
         }
     }

@@ -734,8 +734,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d71b7637ac0dbe488f562d177b377e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dogPrefab: {fileID: 1686910747811591949, guid: 03be751833d12434fae07f63cb958ba3, type: 3}
-  invalidMasks:
+  _dogPrefab: {fileID: 1686910747811591949, guid: 03be751833d12434fae07f63cb958ba3, type: 3}
+  _invalidMasks:
     serializedVersion: 2
     m_Bits: 6208
   _selectDogClips:

@@ -12,9 +12,9 @@ public class DogManager : MonoBehaviour
     InputManager _inputManager;
     Platform _platform;
 
-    [SerializeField] Dog dogPrefab;
+    [SerializeField] Dog _dogPrefab;
 
-    public LayerMask invalidMasks;
+    public LayerMask _invalidMasks;
 
     public List<Dog> AllDogs { get; private set; } = new List<Dog>();
     [SerializeField] AudioClip[] _selectDogClips;
@@ -66,7 +66,7 @@ public class DogManager : MonoBehaviour
                 randPos = new Vector3(Random.Range(2, width - 2), 0, Random.Range(2, height - 2)) + offset;
             }
 
-            var newDog = Instantiate(dogPrefab, randPos, Quaternion.identity, transform);
+            var newDog = Instantiate(_dogPrefab, randPos, Quaternion.identity, transform);
 
             newDog.name = "Dog " + i;
             newDog._selectSound = _selectDogClips[i];
@@ -95,7 +95,7 @@ public class DogManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(_inputManager.GetDogMoveRayOrigin());
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100.0f, invalidMasks) || !DogIsMoving)
+        if (Physics.Raycast(ray, out hit, 100.0f, _invalidMasks) || !DogIsMoving)
         {
             var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
 
@@ -116,8 +116,6 @@ public class DogManager : MonoBehaviour
 
                 if (dog.IsSitting || !dog.IsSelected) continue;
 
-                dog.TokenSource?.Cancel();
-
                 //------------------------------------------------------------
                 //NEW PATHFINDING WITH NAVMESH
 
@@ -133,56 +131,7 @@ public class DogManager : MonoBehaviour
     }
 
 
-    void GetAndSetDogDestination()
-    {
-        if (Input.GetMouseButton(0)) // RECENTLY CHANGED FROM RMB TO LMB FOR MOBILE USE
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100.0f, invalidMasks))
-            {
-                var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
-
-                if (dogs.Length > 0) dogs[0].MoveNVAgent(dogs[0].transform.position);
-
-                return;
-            }
-
-
-            if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)) &&
-                SelectedDictionary.Instance.SelectedTable.Count > 0)
-            {
-                var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
-
-                for (int i = 0; i < dogs.Length; i++)
-                {
-                    var dog = dogs[i];
-
-                    if (dog.IsSitting || !dog.IsSelected) continue;
-
-                    dog.TokenSource?.Cancel();
-
-                    //------------------------------------------------------------
-                    //NEW PATHFINDING WITH NAVMESH
-
-                    var destination = hit.point;
-
-                    dog.MoveNVAgent(destination);
-
-
-
-                    //------------------------------------------------------------
-                }
-            }
-        }
-        else
-        {
-            var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
-
-            if (dogs.Length > 0) dogs[0].MoveNVAgent(dogs[0].transform.position);
-        }
-    }
+    
     
 
 }
