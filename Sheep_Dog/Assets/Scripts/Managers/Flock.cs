@@ -49,6 +49,7 @@ public class Flock : MonoBehaviour
         transform.DeleteChildren();
 
         int spawnCount;
+        DogPathfinding pathRef = DogPathfinding.Instance;
 
         if (GameManager.Instance != null) spawnCount = GameManager.Instance.AgentCount;
         else spawnCount = MenuManager.Instance.AgentCount;
@@ -60,7 +61,13 @@ public class Flock : MonoBehaviour
 
         for (int i = 0; i < spawnCount; i++)
         {
-            var randPosV3 = (UnityEngine.Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + transform.position;
+            var randPosV3 = (UnityEngine.Random.insideUnitCircle * (spawnCount - (spawnCount / 3)) * AgentDensity).ConvertV2ToV3() + transform.position;
+
+            while (!randPosV3.IsPointSpawnable(DogPathfinding.Instance.dogBounds.bounds))
+            {
+                randPosV3 = (UnityEngine.Random.insideUnitCircle * (spawnCount - (spawnCount / 3)) * AgentDensity).ConvertV2ToV3() + transform.position;
+            }
+
             var prefab = UnityEngine.Random.value > 0.8f ? AlternateAgentPrefab : BaseAgentPrefab;
 
             FlockAgent newAgent = Instantiate(

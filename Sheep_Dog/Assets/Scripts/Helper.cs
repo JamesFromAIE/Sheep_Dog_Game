@@ -12,6 +12,17 @@ public static class Helper
     private static Camera _camera = Camera.main;
     private static PointerEventData _eventDataCurrentPosition;
     private static List<RaycastResult> _results;
+
+    public static bool IsPointWithinRect(this Vector3 point, int width, int height)
+    {
+        if (point.x > width - 1.25f ||
+            point.x < -width - 1.25f ||
+            point.z > height + 2 ||
+            point.z < -height + 2) return false;
+
+        return true;
+    }
+
     public static bool isOverUI(TouchControls controls, Platform platform)
     {
         _eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = GetDogMoveRayOrigin(controls, platform)};
@@ -66,6 +77,27 @@ public static class Helper
     {
         foreach (Transform child in t) Object.Destroy(child.gameObject);
     }
+
+    public static bool IsPointSpawnable(this Vector3 point, Bounds bounds)
+    {
+        if (bounds.Contains(point)) return true;
+
+        return false;
+    }
+
+    public static bool IsPointSpawnable(this Vector3 point, Collider col)
+    {
+        Vector3 cOffset = col.transform.position;
+        Vector3 cScale = col.transform.localScale;
+
+        if (point.x > (cScale.x) * 10 - 2 + cOffset.x ||
+            point.x < -(cScale.x) * 10 + 2 + cOffset.x ||
+            point.z > (cScale.z) * 10 - 2 + cOffset.z ||
+            point.z < -(cScale.z) * 10 + 2 + cOffset.z) return false;
+
+        return true;
+    }
+
     public static bool IsPointWalkable(Vector3 point, List<Transform> obj)
     {
         foreach (Transform t in obj)
