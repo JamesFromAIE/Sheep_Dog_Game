@@ -30,6 +30,8 @@ public class Flock : MonoBehaviour
     [Range(0f, 1f)]
     public float AvoidanceRadiusMultiplier = 0.5f; // NeighbourRadius Multiplier for Agents
 
+    public Collider _spawnBounds;
+
     // Utility Floats to save calculations
     float _squareMaxSpeed; 
     float _squareNeighbourRadius; 
@@ -61,11 +63,11 @@ public class Flock : MonoBehaviour
 
         for (int i = 0; i < spawnCount; i++)
         {
-            var randPosV3 = (UnityEngine.Random.insideUnitCircle * (spawnCount - (spawnCount / 3)) * AgentDensity).ConvertV2ToV3() + transform.position;
+            var randPosV3 = (UnityEngine.Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + transform.position;
 
-            while (!randPosV3.IsPointSpawnable(DogPathfinding.Instance.dogBounds.bounds))
+            while (!randPosV3.IsPointSpawnable(_spawnBounds.bounds))
             {
-                randPosV3 = (UnityEngine.Random.insideUnitCircle * (spawnCount - (spawnCount / 3)) * AgentDensity).ConvertV2ToV3() + transform.position;
+                randPosV3 = (UnityEngine.Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + transform.position;
             }
 
             var prefab = UnityEngine.Random.value > 0.8f ? AlternateAgentPrefab : BaseAgentPrefab;

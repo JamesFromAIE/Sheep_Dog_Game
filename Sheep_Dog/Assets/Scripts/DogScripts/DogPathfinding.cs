@@ -21,7 +21,7 @@ public class DogPathfinding : MonoBehaviour
     public int _gridHeight;
     public int _gridDetail;
     public Vector3 gridOffset;
-    public Collider dogBounds;
+    
     List<int2> _unWalkableFInt2List;
 
     public void SetNewUnWalkablesList()

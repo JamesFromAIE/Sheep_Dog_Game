@@ -44,7 +44,7 @@ public class ObstacleManager : MonoBehaviour
         {
             var prefab = Helper.GetRandomValue(ObstaclePrefabs);
 
-            var randPos = new Vector3(Random.Range(2, width - 2), 0, Random.Range(2, height - 2)) + offset;
+            var randPos = new Vector3(Random.Range(2, width - 2), prefab.transform.position.y, Random.Range(2, height - 2)) + offset;
 
             var newObstacle = Instantiate(prefab, randPos, Quaternion.identity, transform);
 

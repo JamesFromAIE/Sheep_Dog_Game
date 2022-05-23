@@ -59,11 +59,11 @@ public class DogManager : MonoBehaviour
 
         for (int i = 0; i < 2; i++)
         {
-            var randPos = new Vector3(Random.Range(2, width - 2), 0, Random.Range(2, height - 2)) + offset;
+            var randPos = new Vector3(Random.Range(10, width - 10), 0, Random.Range(10, height - 10)) + offset;
 
             while (IsDogTooCloseToObstacles(randPos, obstacles, 2.5f))
             {
-                randPos = new Vector3(Random.Range(2, width - 2), 0, Random.Range(2, height - 2)) + offset;
+                randPos = new Vector3(Random.Range(10, width - 10), 0, Random.Range(10, height - 10)) + offset;
             }
 
             var newDog = Instantiate(_dogPrefab, randPos, Quaternion.identity, transform);
