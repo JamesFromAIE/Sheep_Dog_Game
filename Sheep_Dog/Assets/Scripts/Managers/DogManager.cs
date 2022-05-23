@@ -105,29 +105,47 @@ public class DogManager : MonoBehaviour
         }
 
 
-        if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)) &&
-            SelectedDictionary.Instance.SelectedTable.Count > 0)
-        {
-            var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
-
-            for (int i = 0; i < dogs.Length; i++)
+        
+       if (SelectedDictionary.Instance.SelectedTable.Count > 0)
+       {
+            if (Physics.Raycast(ray, out hit, 100.0f, (1 << 9)))
             {
-                var dog = dogs[i];
+                var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
 
-                if (dog.IsSitting || !dog.IsSelected) continue;
+                for (int i = 0; i < dogs.Length; i++)
+                {
+                    var dog = dogs[i];
 
-                //------------------------------------------------------------
-                //NEW PATHFINDING WITH NAVMESH
-
-                var destination = hit.point;
-
-                dog.MoveNVAgent(destination);
+                    if (dog.IsSitting || !dog.IsSelected) continue;
 
 
+                    var destination = hit.point;
 
-                //------------------------------------------------------------
+                    dog.MoveNVAgent(destination);
+
+                }
             }
-        }
+            else if (Physics.Raycast(ray, out hit, 100.0f, (1 << 12)))
+            {
+                var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
+
+                for (int i = 0; i < dogs.Length; i++)
+                {
+                    var dog = dogs[i];
+
+                    if (dog.IsSitting || !dog.IsSelected) continue;
+
+
+                    var hitPos = hit.point;
+
+                    var destination = GetComponentInChildren<MeshCollider>().ClosestPoint(hitPos);
+
+                    dog.MoveNVAgent(destination);
+
+                }
+            }
+
+       }
     }
 
 
