@@ -79,13 +79,6 @@ public class FlockAgent : MonoBehaviour
         
     }
 
-    Quaternion TurnInDirection(Vector3 direction)
-    {
-        return Quaternion.Slerp(transform.rotation,
-                Quaternion.LookRotation(direction).SetZRotation(0),
-                MoveSpeed * Time.deltaTime);
-    }
-
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

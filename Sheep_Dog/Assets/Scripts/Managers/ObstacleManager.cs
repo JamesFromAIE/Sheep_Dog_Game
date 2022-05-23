@@ -10,6 +10,7 @@ public class ObstacleManager : MonoBehaviour
 
     public List<Transform> ObstaclePrefabs = new List<Transform>();
     public List<Transform> AllObstacles = new List<Transform>();
+    public List<Transform> AllFenceStates = new List<Transform>();
 
     void Awake()
     {
@@ -17,6 +18,17 @@ public class ObstacleManager : MonoBehaviour
         _startingObstacleCount = ObstacleCount;
     }
 
+    public void SpawnFenceState()
+    {
+        foreach (var fences in AllFenceStates)
+        {
+            fences.gameObject.SetActive(false);
+        }
+
+        int randNum = Random.Range(0, AllFenceStates.Count);
+
+        AllFenceStates[randNum].gameObject.SetActive(true);
+    }
 
     public void SpawnObstacles()
     {

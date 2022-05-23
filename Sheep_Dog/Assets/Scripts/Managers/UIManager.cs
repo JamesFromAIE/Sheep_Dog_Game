@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour
     void UpdateUI()
     {
         _countText.text = _sheepCount + "/" + _maxSheep;
-        _scoreText.text = "Score: " + GameManager.Instance.GameScore;
+        _scoreText.text = "" + GameManager.Instance.GameScore;
     }
 
     public void IncrementCapturedSheep()

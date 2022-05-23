@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
             case GameState.GenerateLevel:
                 SelectedDictionary.Instance.DeselectAll();
                 Flock.Instance.SpawnNewFlock();
+                ObstacleManager.Instance.SpawnFenceState();
                 ObstacleManager.Instance.SpawnObstacles();
                 DogManager.Instance.SpawnDogs();
                 DogPathfinding.Instance.SetNewUnWalkablesList();
