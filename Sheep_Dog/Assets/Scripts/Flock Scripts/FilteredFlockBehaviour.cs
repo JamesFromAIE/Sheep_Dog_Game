@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public abstract class FilteredFlockBehaviour : FlockBehaviour
 {
-    public ContextFilter Filter;
+    public ContextFilter Filter;  // ABSTRACT CLASS FOR FILTERS
 }

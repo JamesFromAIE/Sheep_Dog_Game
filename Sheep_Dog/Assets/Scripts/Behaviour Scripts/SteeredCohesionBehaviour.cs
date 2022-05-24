@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Flock/Behaviour/SteeredCohesion")]
 public class SteeredCohesionBehaviour : FilteredFlockBehaviour
 {
-    Vector3 _currentVelocity;
+    Vector3 _currentVelocity; // REFERENCED VARIABLE OF AGENT VELOCITY
     float3 _currentSpeed;
     public float AgentSmoothTime = 0.5f;
 
@@ -19,17 +19,17 @@ public class SteeredCohesionBehaviour : FilteredFlockBehaviour
         // ADD ALL points together and AVERAGE
         Vector3 cohesionMove = Vector3.zero;
         
-        foreach (var item in filteredContext)
+        foreach (var item in filteredContext) // FOR EACH NEIGHBOUR...
         {
-            cohesionMove += item.position;
+            cohesionMove += item.position; // TURN IN NEIGHBOUR'S DIRECTION
         }
-        cohesionMove /= context.Count;
+        cohesionMove /= context.Count; // FIND AVERAGE OF ALL DIRECTIONS
 
-        //CREATE OFFSET from agent position
-        cohesionMove -= agent.transform.position;
+        cohesionMove -= agent.transform.position; // CREATE OFFSET from agent position
+        // GET SMOOTHED MOVEMENT DIRECTION
         cohesionMove = Vector3.SmoothDamp(agent.transform.forward, cohesionMove, ref _currentVelocity, AgentSmoothTime);
 
-        return cohesionMove.GroundV3();
+        return cohesionMove.GroundV3(); // RETURN NEW GROUNDED DIRECTION
     }
 
    

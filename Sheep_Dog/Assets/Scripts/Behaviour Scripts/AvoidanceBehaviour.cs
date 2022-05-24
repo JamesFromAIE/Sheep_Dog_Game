@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,30 +7,29 @@ public class AvoidanceBehaviour : FilteredFlockBehaviour
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
         List<Transform> filteredContext = (Filter == null) ? context : Filter.Filter(agent, context); // USE FILTERED LIST IF APPLIED TO THIS
-        // IF No neighbours, RETURN no adjustment
-        if (filteredContext.Count == 0) return Vector3.zero;
+        
+        if (filteredContext.Count == 0) return Vector3.zero; // IF No neighbours, RETURN no adjustment
 
-        // ADD ALL points together and AVERAGE
-        Vector3 avoidanceMove = Vector3.zero;
+        Vector3 avoidanceMove = Vector3.zero; // ADD ALL points together and AVERAGE
         int nAvoid = 0; // NUMBER of things to AVOID
 
         
-        foreach (var item in filteredContext)
+        foreach (var item in filteredContext) // FOR EACH OBJECT TO BE AVOIDED
         {
             float objDist;
-            var agentScript = item.GetComponent<FlockAgent>();
-            var dogScript = item.GetComponent<Dog>();
-            var agentPos = agent.transform.position;
-            var collPoint = item.GetComponent<Collider>().ClosestPoint(agentPos);
+            var agentScript = item.GetComponent<FlockAgent>(); // GET AGENT SCRIPT
+            var dogScript = item.GetComponent<Dog>(); // GET DOG SCRIPT
+            var agentPos = agent.transform.position; // GET AGENT POSITION
+            var collPoint = item.GetComponent<Collider>().ClosestPoint(agentPos); // GET COLL POINT FROM OBJECT
 
-            if (agentScript == null && dogScript == null)
+            if (agentScript == null && dogScript == null)  // IF TRANSFORM is WALL OR OBSTACLE...
             {
-                objDist = Vector3.SqrMagnitude(collPoint - agentPos); // IF TRANSFORM is WALL OR OBSTACLE
+                objDist = Vector3.SqrMagnitude(collPoint - agentPos); // GET DISTANCE BETWEEN AGENT AND OBJECT
 
-                if (objDist < flock.SquareAvoidanceRadius)
+                if (objDist < flock.SquareAvoidanceRadius) // IF OBJECT IS TOO CLOSE...
                 {
                     nAvoid++;
-                    avoidanceMove += (agent.transform.position - collPoint).normalized / 2; // IF TRANSFORM is OBSTACLE OR WALL
+                    avoidanceMove += (agent.transform.position - collPoint).normalized / 2; // TURN AWAY FROM OBJECT
                 }
             }
             else
@@ -41,19 +39,19 @@ public class AvoidanceBehaviour : FilteredFlockBehaviour
                 else objDist = Vector3.SqrMagnitude(collPoint - agentPos); // IF TRANSFORM is DOG
 
 
-                if (objDist < flock.SquareAvoidanceRadius)
+                if (objDist < flock.SquareAvoidanceRadius) // IF OBJECT IS TOO CLOSE...
                 {
                     nAvoid++;
-                    avoidanceMove += agent.transform.position - item.position;
+                    avoidanceMove += agent.transform.position - item.position; // TURN AWAY FROM OBJECT
                 }
 
             }
                 
         }
 
-        if (nAvoid > 0) avoidanceMove /= nAvoid;
+        if (nAvoid > 0) avoidanceMove /= nAvoid; // FIND AVERAGE OF ALL DIRECTIONS
 
-        return avoidanceMove.GroundV3();
+        return avoidanceMove.GroundV3(); // RETURN NEW GROUNDED DIRECTION
     }
 
 }

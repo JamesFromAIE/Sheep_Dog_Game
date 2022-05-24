@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,87 +5,98 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] NavMeshSurface _surface;
 
-    public static GameManager Instance;
-    public GameState State;
+    public static GameManager Instance; // VARIABLE FOR SINGLETON
+    public GameState State; // VARIABLE TO CONTAIN CURRENT GAME STATE
 
-    public int GameScore { get; private set; } = 0;
+    public int GameScore { get; private set; } = 0; // PUBLIC GETTER FOR CURRENT GAME SCORE
     [Range(1, 100)]
-    public int AgentCount = 50;
-    int _startingCount;
+    public int AgentCount = 50; // VARIABLE FOR NUMBER OF AGENTS TO SPAWN
+    int _startingCount; // VARIABLE TO HOLD ORIGINAL AGENT COUNT FROM SCENE START
 
     void Awake()
     {
-        Instance = this;
-        _startingCount = AgentCount;
+        Instance = this; // SET SINGLETON TO THIS SCRIPT
+        _startingCount = AgentCount; // SET STARTING COUNT TO AGENT COUNT
     }
 
     void Start()
     {
-        UpdateGameState(GameState.GenerateLevel);
+        UpdateGameState(GameState.GenerateLevel); // GENERATE NEW LEVEL
     }
 
 
     public void UpdateGameState(GameState newState)
     {
-        State = newState;
+        State = newState; // CURRENT GAME STATE IS SET TO NEW STATE
 
-        UIManager.Instance.UpdateUIState(State);
+        UIManager.Instance.UpdateUIState(State); // UPDATE STATE OF UI NO MATTER THE STATE
 
         switch (State)
         {
-            case GameState.GenerateLevel:
-                SelectedDictionary.Instance.DeselectAll();
-                Flock.Instance.SpawnNewFlock();
-                ObstacleManager.Instance.SpawnFenceState();
-                ObstacleManager.Instance.SpawnObstacles();
-                DogManager.Instance.SpawnDogs();
-                DogPathfinding.Instance.SetNewUnWalkablesList();
-                UIManager.Instance.InitialiseUI();
+            case GameState.GenerateLevel: // IN CASE OF GENERATE LEVEL...
+                SelectedDictionary.Instance.DeselectAll(); // DESELECT ALL DOGS FROM SCENE
+                Flock.Instance.SpawnNewFlock(); // SPAWN NEW FLOCK OF AGENTS
+                ObstacleManager.Instance.SpawnFenceState(); // SPAWN NEW FENCE STATE
+                ObstacleManager.Instance.SpawnObstacles(); // SPAWN NEW OBSTACLES
+                DogManager.Instance.SpawnDogs(); // SPAWN NEW DOGS
+                UIManager.Instance.InitialiseUI(); // INITIALISE VALUES IN UI
                 //_surface.BuildNavMesh();
 
-                UpdateGameState(GameState.Playing);
+                UpdateGameState(GameState.Playing); // SET GAMESTATE TO PLAYING
                 break;
-            case GameState.Playing:
-                Time.timeScale = 1f;
-                DogManager.Instance.EnableDogs();
-                Flock.Instance.EnableAgents();
+
+            case GameState.Playing: // IN CASE OF PLAYING...
+
+                Time.timeScale = 1f; // PLAY REGULAR TIME
+
+                DogManager.Instance.EnableDogs(); // ENABLE DOGS IN CURRENT SCENE
+                Flock.Instance.EnableAgents(); // ENABLE AGENTS IN CURRENT SCENE
                 break;
-            case GameState.Paused:
-                Time.timeScale = 0f;
-                DogManager.Instance.DisableDogs();
-                Flock.Instance.DisableAgents();
+
+            case GameState.Paused: // IN CASE PAUSED...
+
+                Time.timeScale = 0f; // STOP TIME
+
+                DogManager.Instance.DisableDogs(); // DISABLE DOGS IN CURRENT SCENE
+                Flock.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
                 break;
-            case GameState.Complete:
-                Time.timeScale = 0f;
-                DogManager.Instance.DisableDogs();
-                Flock.Instance.DisableAgents();
+
+            case GameState.Complete: // IN CASE OF VICTORY...
+
+                Time.timeScale = 0f; // STOP TIME
+
+                DogManager.Instance.DisableDogs(); // DISABLE DOGS IN CURRENT SCENE
+                Flock.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
                 break;
-            case GameState.Failure:
-                Time.timeScale = 0f;
-                DogManager.Instance.DisableDogs();
-                Flock.Instance.DisableAgents();
+
+            case GameState.Failure: // IN CASE OF FAILURE...
+
+                Time.timeScale = 0f; // STOP TIME
+
+                DogManager.Instance.DisableDogs(); // DISABLE DOGS IN CURRENT SCENE
+                Flock.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
                 break;
         }
     }
 
     public void IncreaseGameScore(int value)
     {
-        GameScore += value;
+        GameScore += value; // INCREASE GAME SCORE BY VALUE
     }
 
     public void ResetGameScore()
     {
-        GameScore = 0;
+        GameScore = 0; // SET GAME SCORE TO ZERO
     }
 
     public void IncreaseAgentCount(int value)
     {
-        AgentCount += value;
+        AgentCount += value; // INCREASE AGENT COUNT TO SPAWN BY VALUE
     }
 
     public void ResetAgentCount()
     {
-        AgentCount = _startingCount;
+        AgentCount = _startingCount; // RESET AGENT COUNT TO SPAWN BACK TO STARTING COUNT
     }
 
 

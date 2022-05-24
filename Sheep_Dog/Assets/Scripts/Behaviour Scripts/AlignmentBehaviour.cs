@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,13 +13,13 @@ public class AlignmentBehaviour : FilteredFlockBehaviour
         // ADD ALL points together and AVERAGE
         Vector3 alignmentMove = Vector3.zero;
 
-        foreach (var item in filteredContext)
+        foreach (var item in filteredContext) // FOR EACH NEIGHBOUR...
         {
-            alignmentMove += item.transform.forward;
+            alignmentMove += item.transform.forward; // TURN IN NEIGHBOUR'S DIRECTION
         }
-        alignmentMove /= context.Count;
+        alignmentMove /= context.Count; // FIND AVERAGE OF ALL DIRECTIONS
 
-        return alignmentMove.GroundV3();
+        return alignmentMove.GroundV3(); // RETURN NEW GROUNDED DIRECTION
     }
 
 }

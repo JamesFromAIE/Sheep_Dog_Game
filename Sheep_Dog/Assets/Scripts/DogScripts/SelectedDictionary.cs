@@ -1,47 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectedDictionary : MonoBehaviour
 {
-    public static SelectedDictionary Instance;
+    public static SelectedDictionary Instance; // SINGLETON VARIABLE
     
-    void Awake()
+    void Awake() => Instance = this; // SET SINGLETON TO THIS SCRIPT
+
+    public Dictionary<int, Dog> SelectedTable = new Dictionary<int, Dog>(); // INITIALISE NEW DICTIONARY
+
+    public void AddSelected(Dog dog) // ADD DOG TO DICTIONARY
     {
-        Instance = this;
+        int id = dog.GetInstanceID(); // GET DOG INSTANCE ID
 
-    }
-
-
-
-    public Dictionary<int, Dog> SelectedTable = new Dictionary<int, Dog>();
-
-    public void AddSelected(Dog dog)
-    {
-        int id = dog.GetInstanceID();
-
-        if (!(SelectedTable.ContainsKey(id)))
+        if (!(SelectedTable.ContainsKey(id))) // IF DICTIONARY DOESNT CONTAIN THIS KEY...
         {
-            SelectedTable.Add(id, dog);
-            dog.gameObject.AddComponent<SelectionComponent>();
+            SelectedTable.Add(id, dog); // ADD INSTANCE ID AND DOG TO DICTIONARY
+            dog.gameObject.AddComponent<SelectionComponent>(); // ADD SELECT COMPONENT ONTO DOG
         }
     }
 
-    public void Deselect(int id)
+    public void Deselect(int id) // REMOVE DOG FROM DICTIONARY
     {
-        Destroy(SelectedTable[id].GetComponent<SelectionComponent>());
-        SelectedTable.Remove(id);
+        Destroy(SelectedTable[id].GetComponent<SelectionComponent>()); // REMOVE SELECT COMPONENT FROM DOG
+        SelectedTable.Remove(id); // REMOVE DOG FRO DICTIONARY
     }
 
-    public void DeselectAll()
+    public void DeselectAll() // REMOVE ALL DOGS FROM DICTIONARY
     {
-        foreach(KeyValuePair<int,Dog> pair in SelectedTable)
+        foreach(KeyValuePair<int,Dog> pair in SelectedTable) // FOR EVERY PAIR IN THE DICTIONARY
         {
-            if(pair.Value != null)
+            if(pair.Value != null) // IF DOG IS NOT NULL...
             {
-                Destroy(SelectedTable[pair.Key].GetComponent<SelectionComponent>());
+                Destroy(SelectedTable[pair.Key].GetComponent<SelectionComponent>()); // REMOVE SELECT COMPONENT FROM DOG
             }
         }
-        SelectedTable.Clear();
+        SelectedTable.Clear(); // CLEAR DICTIONARY OF ALL PAIRS
     }
 }
