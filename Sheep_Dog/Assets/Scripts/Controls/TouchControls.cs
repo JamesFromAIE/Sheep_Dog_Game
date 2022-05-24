@@ -123,7 +123,7 @@ public class @TouchControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""4c6f7b06-911d-499a-ae4d-f3e29993a661"",
                     ""path"": ""<Touchscreen>/primaryTouch/press"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": ""Press(pressPoint=0.2,behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TouchPress"",

@@ -1027,7 +1027,7 @@ MonoBehaviour:
   DriveFactor: 10
   MaxSpeed: 20
   NeighbourRadius: 1.1
-  AvoidanceRadiusMultiplier: 0.322
+  AvoidanceRadiusMultiplier: 1
   _spawnBounds: {fileID: 364759704}
 --- !u!4 &273542723
 Transform:
