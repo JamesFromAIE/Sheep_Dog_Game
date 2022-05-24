@@ -138,6 +138,7 @@ public class UIManager : MonoBehaviour
     public void Quit()
     {
         Debug.Log("Back");
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 

@@ -57,12 +57,8 @@ public class FlockAgent : MonoBehaviour
     {
         if (_agentState == AgentState.Scared)
         {
-            if (velocity != Vector3.zero)
-            {
-                transform.forward = velocity.normalized;
-                transform.position += Time.deltaTime * MoveSpeed * MoveModifier * velocity;
-            }
-                
+            transform.forward = velocity.normalized;
+            transform.position += Time.deltaTime * MoveSpeed * MoveModifier * velocity;
         }
         else if (_agentState == AgentState.Idle)
         {
@@ -70,11 +66,10 @@ public class FlockAgent : MonoBehaviour
             {
                 MoveSpeed = Random.Range(1, 10) / 100;
             }
-            if (velocity != Vector3.zero)
-            {
-                transform.forward = velocity.normalized;
-                transform.position += Time.deltaTime * MoveSpeed * MoveModifier * velocity;
-            }
+
+            transform.forward = velocity.normalized;
+            transform.position += Time.deltaTime * MoveSpeed * MoveModifier * velocity;
+            
         }
         
     }

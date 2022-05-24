@@ -18,6 +18,8 @@ public class MenuManager : MonoBehaviour
         ControlsPage.SetActive(false);
         CreditsPage.SetActive(false);
         BackButton.SetActive(false);
+
+        Flock.Instance.SpawnNewFlock();
     }
 
     public void ShowCredits()

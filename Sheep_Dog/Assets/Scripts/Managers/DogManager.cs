@@ -74,6 +74,21 @@ public class DogManager : MonoBehaviour
         }
     }
 
+    public void DisableDogs()
+    {
+        var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
+
+        for (int i = 0; i < dogs.Length;i++) dogs[i].enabled = false;
+    }
+
+    public void EnableDogs()
+    {
+        var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray();
+
+        for (int i = 0; i < dogs.Length; i++) dogs[i].enabled = true;
+    }
+
+
     bool IsDogTooCloseToObstacles(Vector3 point, List<Transform> list, float factor)
     {
         foreach (Transform t in list)
@@ -88,6 +103,25 @@ public class DogManager : MonoBehaviour
     {
         GetAndSetDogDestinationNew();
 
+    }
+
+    public void GetAndSetRandomDestination(Dog dog)
+    {
+        var randPos = (Random.insideUnitCircle * 2).ConvertV2ToV3();
+        MeshCollider movePlane = GetComponentInChildren<MeshCollider>();
+
+        int iterations = 0;
+        while (randPos.IsPointWalkable(movePlane.bounds))
+        {
+            randPos = (Random.insideUnitCircle * 2).ConvertV2ToV3();
+            randPos = movePlane.ClosestPoint(randPos);
+            iterations++;
+
+            if (iterations > 100) Debug.LogError("COULDNT FIND IDLE DOG MOVE POSITION");
+        }
+
+        dog.MoveNVAgent(randPos);
+        Debug.Log("Set Agent new move position");
     }
 
     void GetAndSetDogDestinationNew()

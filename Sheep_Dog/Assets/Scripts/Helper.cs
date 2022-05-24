@@ -111,6 +111,12 @@ public static class Helper
 
     }
 
+    public static bool IsPointWalkable(this Vector3 point, Bounds bounds)
+    {
+        if (bounds.Contains(point)) return true;
+        else return false;
+    }
+
     public static T GetRandomValue<T>(List<T> list)
     {
         int index = UnityEngine.Random.Range(0, list.Count);

@@ -30,7 +30,7 @@ public class Dog : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(transform.position, destination) < 0.2f)
+        if (Vector3.Distance(transform.position, destination) < 0.2f || GameManager.Instance.State != GameState.Playing)
         {
             NMAgent.SetDestination(transform.position);
             ChangeDogState(DogStates.Idle);
@@ -52,6 +52,9 @@ public class Dog : MonoBehaviour
             case DogStates.Idle:
                 AudioManager.Instance.PlayDogRun(false);
                 IsSitting = false;
+
+                //if (UnityEngine.Random.Range(0, 500) < 10) DogManager.Instance.GetAndSetRandomDestination(this);
+
                 break;
             case DogStates.Sitting:
                 AudioManager.Instance.PlayDogRun(false);
@@ -75,7 +78,5 @@ public class Dog : MonoBehaviour
     #endregion
 
     #region Private Methods
-
-
     #endregion
 }

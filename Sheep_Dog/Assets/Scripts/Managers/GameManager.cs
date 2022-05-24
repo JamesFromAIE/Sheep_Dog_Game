@@ -49,15 +49,23 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Playing:
                 Time.timeScale = 1f;
+                DogManager.Instance.EnableDogs();
+                Flock.Instance.EnableAgents();
                 break;
             case GameState.Paused:
                 Time.timeScale = 0f;
+                DogManager.Instance.DisableDogs();
+                Flock.Instance.DisableAgents();
                 break;
             case GameState.Complete:
                 Time.timeScale = 0f;
+                DogManager.Instance.DisableDogs();
+                Flock.Instance.DisableAgents();
                 break;
             case GameState.Failure:
                 Time.timeScale = 0f;
+                DogManager.Instance.DisableDogs();
+                Flock.Instance.DisableAgents();
                 break;
         }
     }

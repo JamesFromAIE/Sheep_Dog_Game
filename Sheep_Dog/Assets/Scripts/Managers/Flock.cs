@@ -88,6 +88,10 @@ public class Flock : MonoBehaviour
     {
         //float startTime = Time.realtimeSinceStartup;
 
+        if (GameManager.Instance != null) if (GameManager.Instance.State != GameState.Playing) return;
+
+
+
         foreach (var agent in _agents)
         {
 
@@ -127,6 +131,23 @@ public class Flock : MonoBehaviour
         }
         return context;
     }
+
+    public void EnableAgents()
+    {
+        foreach (var agent in _agents)
+        {
+            if (!agent.enabled) agent.enabled = true;
+        }
+    }
+
+    public void DisableAgents()
+    {
+        foreach (var agent in _agents)
+        {
+            if (agent.enabled) agent.enabled = false;
+        }
+    }
+
 
 
     private float SetAgentSpeedFromDogs(FlockAgent agent)
