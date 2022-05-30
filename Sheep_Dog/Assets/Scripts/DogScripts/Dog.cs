@@ -23,11 +23,10 @@ public class Dog : MonoBehaviour
         }
 
         // IF DOG IS TOO CLOSE TO NEW DESTINATION...
-        if (Vector3.Distance(transform.position, destination) < 0.2f || GameManager.Instance.State != GameState.Playing)
+        if (Vector3.Distance(transform.position, destination) < 0.6f || GameManager.Instance.State != GameState.Playing)
         {
             _nMAgent.SetDestination(transform.position); // DONT MOVE!!!
             ChangeDogState(DogStates.Idle); // DOG IS NOW IDLE
-            
         }
         else
         {
