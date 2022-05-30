@@ -1,15 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance; // VARIABLE FOR SINGLETON
 
-    private void Awake() => Instance = this; // SET SINGLETON TO THIS SCRIPT
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this; // SET SINGLETON TO THIS SCRIPT
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-    [SerializeField] AudioSource[] _sheepAudSources; // ARRAY OF BLEETING AUDIO SOURCES
     [SerializeField] AudioSource _runningDogSource; // AUDIO SOURCE FOR RUNNING DOGS
+    [SerializeField] AudioSource _scoreSource;
+    [SerializeField] AudioSource _musicSource;
+    [SerializeField] AudioSource[] _sheepAudSources; // ARRAY OF BLEETING AUDIO SOURCES
     [SerializeField] List<AudioClip> _sheepClips;  // ARRAY OF SHEEP BLEET SOUNDS
+
+    void Start()
+    {
+        _musicSource?.Play();
+    }
 
     public void PlayDogRun(bool isRunning)
     {
@@ -38,6 +58,17 @@ public class AudioManager : MonoBehaviour
                 source.PlayClip(clip, pitch); // PLAY BLEET CLIP ON THIS AUDIO SOURCE
             }
         }
+    }
+
+
+    async Task PlayAsyncPitch(AudioSource source)
+    {
+        float pitch = UnityEngine.Random.Range(-10, 10) / 100; // ALTER PITCH OF AUDIO SOURCE
+
+        source.Play();
+        await Task.Delay(200);
+
+        _scoreSource.pitch -= pitch;
     }
     
 }

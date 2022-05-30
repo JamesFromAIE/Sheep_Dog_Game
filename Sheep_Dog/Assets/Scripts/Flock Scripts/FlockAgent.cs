@@ -90,6 +90,7 @@ public class FlockAgent : MonoBehaviour
         {
             // ENTERED OUTSIDE GATE
 
+            _agentFlock.PlayConfetti(transform.position);
             _agentFlock.RemoveAgentFromList(this); // REMOVE AGENT FROM FLOCK ORIGIN SCRIPT
             UIManager.Instance.IncrementCapturedSheep(); // INCREASE NUMBER OF CAPTURED SHEEP IN UI
 
@@ -106,6 +107,7 @@ public class FlockAgent : MonoBehaviour
             ChangeAgentState(AgentState.Idle); // CHANGE CURRENT STATE TO IDLE
         }
     }
+
 }
 
 public enum AgentState

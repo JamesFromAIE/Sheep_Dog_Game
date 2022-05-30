@@ -25,6 +25,7 @@ public class Flock : MonoBehaviour
     public float AvoidanceRadiusMultiplier = 0.5f; // NEIGHBOUR RADIUS MULTIPLIER FOR AGENTS
 
     public Collider _spawnBounds; // BOUNDS IN WHICH AGENTS CAN SPAWN
+    public ParticleSystem _confetti;
 
     // Utility Floats to save calculations
     float _squareMaxSpeed; 
@@ -155,7 +156,12 @@ public class Flock : MonoBehaviour
         foreach (var agent in _agents) if (agent.enabled) agent.enabled = false; // DISABLE ALL AGENTS IN LIST
     }
 
+    public void PlayConfetti(Vector3 agentPos)
+    {
+        var confetti = Instantiate(_confetti, agentPos, _confetti.transform.rotation);
 
+
+    }
 
     
 
