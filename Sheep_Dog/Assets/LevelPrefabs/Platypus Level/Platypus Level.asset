@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930af0ad55b784b4c9b46edefb55b6f6, type: 3}
+  m_Name: Platypus Level
+  m_EditorClassIdentifier: 
+  _fences: {fileID: 3428261224704753734, guid: c0ad78d14dc97c04cb487f0ac6b49fed, type: 3}
+  _midPoint: {fileID: 4296680612147510478, guid: 65f35f7d3bf09f640b2378206e46bda7, type: 3}
+  _walkablePlanes:
+  - {fileID: 4817173487134542040, guid: 98fb921d83d300b4eb1936ef1d457802, type: 3}
+  - {fileID: 698303943706006757, guid: 7278f9db937ad0640b1dd294da2cadd1, type: 3}
+  - {fileID: 5646305416438318277, guid: ffa7ef1ab0b3a4f499ae60b943771adb, type: 3}
+  - {fileID: 1658416245717920208, guid: f3ca762c2ce82a7409e8d9baf30d86e3, type: 3}
+  - {fileID: 2975116649598592193, guid: d0d1d91db5a3c474e889aba9ee785a8c, type: 3}

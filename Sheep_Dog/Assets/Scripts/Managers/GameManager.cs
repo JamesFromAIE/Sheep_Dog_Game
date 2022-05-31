@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
                 Flock.Instance.SpawnFlock();
                 DogManager.Instance.SpawnDogs();
                 UIManager.Instance.InitialiseUI(); // INITIALISE VALUES IN UI
+                //_surface.BuildNavMesh();
 
                 UpdateGameState(GameState.Playing); // SET GAMESTATE TO PLAYING
                 break;

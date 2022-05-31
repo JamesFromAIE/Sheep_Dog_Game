@@ -11,6 +11,8 @@ public static class Helper
     private static PointerEventData _eventDataCurrentPosition;
     private static List<RaycastResult> _results;
 
+    
+
     public static bool IsPointWithinRect(this Vector3 point, int width, int height)
     {
         if (point.x > width - 1.25f ||

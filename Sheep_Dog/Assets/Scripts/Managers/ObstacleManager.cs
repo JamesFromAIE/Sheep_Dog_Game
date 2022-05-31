@@ -91,22 +91,14 @@ public class ObstacleManager : MonoBehaviour
         for (int i = 0; i < ObstacleCount; i++) // FOR EVERY COUNT OF OBSTACLE COUNT
         {
             var prefab = Helper.GetRandomValue(ObstaclePrefabs); // GET RANDOM ROCK PREFAB
-            var plane = Helper.GetRandomValue(WalkablePlanes);
+            var plane = Helper.GetRandomValue(WalkablePlanes); // GET RANDOM PLANE
 
-            var width = plane.transform.localScale.x * 10;
-            var length = plane.transform.localScale.z * 10;
-            var offset = plane.transform.position - new Vector3(width / 2,0,length / 2);
+            var randPos = RandomPositionInPlane(plane); // GET RANDOM POSITION
 
-            // GET RANDOM POSITION
-            var randPos = new Vector3(Random.Range(width / 5, width - width / 5), 
-                                      0, 
-                                      Random.Range(length / 5, length - length / 5)) + offset;
-
-            while (!randPos.IsPointSpawnable(plane.bounds)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
+            while (!randPos.IsPointSpawnable(plane.bounds) || IsObstacleTooCloseToObstacles(randPos, AllObstacles, 5f)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
             {
-                randPos = new Vector3(Random.Range(width / 5, width - width / 5),
-                                      0,
-                                      Random.Range(length / 5, length - length / 5)) + offset;
+                plane = Helper.GetRandomValue(WalkablePlanes); // GET NEW RANDOM PLANE
+                randPos = RandomPositionInPlane(plane); // GET NEW RANDOM POSITION
             }
 
             var newObstacle = Instantiate(prefab, randPos + prefab.transform.position, Quaternion.identity, transform); // INSTANTIATE NEW OBSTACLE IN SCENE
@@ -115,6 +107,27 @@ public class ObstacleManager : MonoBehaviour
             AllObstacles.Add(newObstacle); // ADD OBSTACLE TO OBSTACLE LIST
 
         }
+    }
+
+    bool IsObstacleTooCloseToObstacles(Vector3 point, List<Transform> list, float factor)
+    {
+        foreach (Transform t in list) // FOR EACH TRANSFORM IN LIST...
+        {
+            if (Vector3.Distance(point, t.position) < factor) return true; // IF THIS OBSTACLE IS TOO CLOSE TO POINT, RETURN TRUE
+        }
+        return false; // BECAUSE NO OBSTACLES WERE TOO CLOSE TO POINT, RETURN FALSE
+    }
+
+    Vector3 RandomPositionInPlane(MeshCollider coll)
+    {
+        var width = coll.transform.localScale.x * 10;
+        var length = coll.transform.localScale.z * 10;
+        var offset = coll.transform.position - new Vector3(width / 2, 0, length / 2);
+
+        // GET RANDOM POSITION
+        return new Vector3(Random.Range(width / 3, width - width / 3),
+                           0,
+                           Random.Range(length / 3, length - length / 3)) + offset;
     }
 
 
@@ -180,6 +193,7 @@ public class ObstacleManager : MonoBehaviour
             {
                 closestMesh = plane;
                 closestDistance = Vector3.Distance(origPos, closestMesh.ClosestPoint(origPos));
+                iterations++;
                 continue;
             }
 

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930af0ad55b784b4c9b46edefb55b6f6, type: 3}
+  m_Name: XCross Level
+  m_EditorClassIdentifier: 
+  _fences: {fileID: 3428261224704753734, guid: 6fae3cb5f0ab3464799fc1f53058bf97, type: 3}
+  _midPoint: {fileID: 4296680612147510478, guid: 6b557977978dd8a4b8260d5478f9885d, type: 3}
+  _walkablePlanes:
+  - {fileID: 9105690774231589714, guid: c48aaa812bd1a974c8b963c373341b4f, type: 3}
+  - {fileID: 2193571854698075126, guid: 8afde8c20c5902544a3ea5a7daa9a68c, type: 3}
+  - {fileID: 408425016993435004, guid: 3548688f8f07aa04a9cb9998dcfe2d07, type: 3}
+  - {fileID: 8031740782906948407, guid: 9722f38bb54e7e045880a56526534923, type: 3}
+  - {fileID: 7412849440352388810, guid: ebee3ccb105e5da47b960050395590c4, type: 3}

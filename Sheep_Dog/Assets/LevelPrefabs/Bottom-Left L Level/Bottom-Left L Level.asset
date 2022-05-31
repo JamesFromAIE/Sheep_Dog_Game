@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930af0ad55b784b4c9b46edefb55b6f6, type: 3}
+  m_Name: Bottom-Left L Level
+  m_EditorClassIdentifier: 
+  _fences: {fileID: 3428261224704753734, guid: ce5fa54b70ccf1248b023c8b84197b5d, type: 3}
+  _midPoint: {fileID: 4296680612147510478, guid: 6e5d2d014a0b29a4e86b36084f00cdac, type: 3}
+  _walkablePlanes:
+  - {fileID: 6709584435629576494, guid: 67c91d1a7f7620e4b9ca11afe3a3336a, type: 3}
+  - {fileID: 6915775064830293641, guid: 151ad1fc5fdc3e5429499fb39bad5f75, type: 3}
