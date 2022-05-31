@@ -13,7 +13,7 @@ public class Flock : MonoBehaviour
     List<FlockAgent> _agents = new List<FlockAgent>(); // INITIALISE LIST FOR ALL AGENTS
     public FlockBehaviour Behaviour; // VARIABLE T HOLD BEHAVIOUR WHIHC WILL APPLY TO AGENTS
 
-    const float AgentDensity = .4f; // DENSITY OF WHICH AGENTS SPAWN
+    const float AgentDensity = .8f; // DENSITY OF WHICH AGENTS SPAWN
 
     [Range(1f, 100f)]
     public float DriveFactor = 10f; // MOVE SPEED MULTIPLIERS FOR AGENTS
