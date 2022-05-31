@@ -18,7 +18,9 @@ public class MenuManager : MonoBehaviour
         CreditsPage.SetActive(false);
         BackButton.SetActive(false);
 
-        Flock.Instance.SpawnNewFlock(); // SPAWN NEW FLOCK
+        ObstacleManager.Instance.GetAndSetFirstLevelLayout();
+        ObstacleManager.Instance.SpawnLevel();
+        Flock.Instance.SpawnFlock(); // SPAWN NEW FLOCK
     }
 
     public void ShowCredits()

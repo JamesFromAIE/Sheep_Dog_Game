@@ -34,13 +34,14 @@ public class GameManager : MonoBehaviour
         switch (State)
         {
             case GameState.GenerateLevel: // IN CASE OF GENERATE LEVEL...
-                SelectedDictionary.Instance.DeselectAll(); // DESELECT ALL DOGS FROM SCENE
-                Flock.Instance.SpawnNewFlock(); // SPAWN NEW FLOCK OF AGENTS
-                ObstacleManager.Instance.SpawnFenceState(); // SPAWN NEW FENCE STATE
-                ObstacleManager.Instance.SpawnObstacles(); // SPAWN NEW OBSTACLES
-                DogManager.Instance.SpawnDogs(); // SPAWN NEW DOGS
+
+                SelectedDictionary.Instance.DeselectAll();
+                ObstacleManager.Instance.GetNewLevelLayout();
+                ObstacleManager.Instance.SpawnLevel();
+                ObstacleManager.Instance.SpawnObstacles();
+                Flock.Instance.SpawnFlock();
+                DogManager.Instance.SpawnDogs();
                 UIManager.Instance.InitialiseUI(); // INITIALISE VALUES IN UI
-                //_surface.BuildNavMesh();
 
                 UpdateGameState(GameState.Playing); // SET GAMESTATE TO PLAYING
                 break;

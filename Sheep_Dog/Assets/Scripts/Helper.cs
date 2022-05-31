@@ -83,6 +83,18 @@ public static class Helper
         return false;
     }
 
+    public static bool IsPointSpawnableList(this Vector3 point, List<MeshCollider> colls)
+    {
+        foreach (MeshCollider coll in colls)
+        {
+            Bounds bounds = coll.bounds;
+
+            if (bounds.Contains(point)) return true;
+        }
+
+        return false;
+    }
+
     public static bool IsPointSpawnable(this Vector3 point, Collider col)
     {
         Vector3 cOffset = col.transform.position;

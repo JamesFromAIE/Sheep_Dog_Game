@@ -45,24 +45,24 @@ public class DogManager : MonoBehaviour
     {
         AllDogs.Clear(); // CLEAR ALL DOGS FROM LIST
 
-        foreach (Transform child in transform) // FOREACH OBJECT IN CHILDREN
-        {
-            if (child.TryGetComponent(out Dog dog)) Destroy(dog.gameObject); // IF ITS A DOG, DESTROY IT
-        }
+        transform.DeleteChildren();
 
         var obstacles = ObstacleManager.Instance.AllObstacles; // GET ALL OBSTACLES FROM OBSTACLE MANAGER
 
-        var width = _gridWidth; // SIMPLIFY WIDTH
-        var height = _gridHeight; // SIMPLIFY HEIGHT
-        var offset = gridOffset; // SIMPLIFY OFFSET
+        var plane = Helper.GetRandomValue(ObstacleManager.Instance.WalkablePlanes);
+
+        var width = plane.transform.localScale.x * 10;
+        var length = plane.transform.localScale.z * 10;
+        var offset = plane.transform.position - new Vector3(width / 2, 0, length / 2);
+
 
         for (int i = 0; i < 2; i++) // ITERATE OVER THIS 'FOR' LOOP TWO TIMES
         {
-            var randPos = new Vector3(Random.Range(10, width - 10), 0, Random.Range(10, height - 10)) + offset; // GET RANDOM POSITION TO SPAWN
+            var randPos = new Vector3(Random.Range(width / 4, width - width / 4), 0, Random.Range(length / 4, length - length / 4)) + offset; // GET RANDOM POSITION TO SPAWN
 
             while (IsDogTooCloseToObstacles(randPos, obstacles, 2.5f)) // WHILE POSITION IS TOO CLOSE TO OBSTACLES (INSIDE OF THEM)
             {
-                randPos = new Vector3(Random.Range(10, width - 10), 0, Random.Range(10, height - 10)) + offset; // GET RANDOM POSITION TO SPAWN
+                randPos = new Vector3(Random.Range(width / 4, width - width / 4), 0, Random.Range(length / 4, length - length / 4)) + offset; // GET RANDOM POSITION TO SPAWN
             }
 
             var newDog = Instantiate(_dogPrefab, randPos, Quaternion.identity, transform); // INSTANTIATE NEW DOG INTO SCENE
@@ -169,7 +169,8 @@ public class DogManager : MonoBehaviour
 
                     var hitPos = hit.point; // GET HIT POINT FROM RAYCAST
 
-                    var destination = GetComponentInChildren<MeshCollider>().ClosestPoint(hitPos); // GET POINT ON PATHFINDING PLANE CLOSEST TO HIT POINT
+                    Vector3 destination;
+                    ObstacleManager.Instance.GetClosestWalkablePlane(hitPos, out destination); // GET POINT ON PATHFINDING PLANE CLOSEST TO HIT POINT
 
                     dog.MoveNVAgent(destination); // SET DOG TO MOVE TOWARD THIS DESTINATION
 

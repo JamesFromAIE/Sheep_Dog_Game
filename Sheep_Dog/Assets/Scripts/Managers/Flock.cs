@@ -33,13 +33,15 @@ public class Flock : MonoBehaviour
     float _squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return _squareAvoidanceRadius;} }
 
-    public void SpawnNewFlock()
+    public void SpawnFlock()
     {
         _agents?.Clear(); // CLEAR AGENTS FOR AGENT LIST 
 
         transform.DeleteChildren(); // DELETE ALL CHILDREN IN THIS OBJECT
 
         int spawnCount; // INITIALISE SPAWN COUNT
+        Vector3 center = ObstacleManager.Instance.MidPoint.position;
+        List<MeshCollider> spawnPlanes = ObstacleManager.Instance.WalkablePlanes;
 
         // GET EITHER MENU OR GAME MANAGER STARTING COUNT BASED ON CURRENT SCENE
         if (GameManager.Instance != null) spawnCount = GameManager.Instance.AgentCount;
@@ -54,15 +56,15 @@ public class Flock : MonoBehaviour
         for (int i = 0; i < spawnCount; i++) // ITERATE FOR THE NUMBER OF AGENTS THERE ARE TO SPAWN
         {
             // GET NEW RANDOM POSITION TO SPAWN AGENT FROM 
-            var randPosV3 = (UnityEngine.Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + transform.position;
+            var randPosV3 = (Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + center;
 
-            while (!randPosV3.IsPointSpawnable(_spawnBounds.bounds)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
+            while (!randPosV3.IsPointSpawnableList(spawnPlanes)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
             {
                 // GET NEW RANDOM POSITION TO SPAWN AGENT FROM 
-                randPosV3 = (UnityEngine.Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + transform.position;
+                randPosV3 = (Random.insideUnitCircle * spawnCount * AgentDensity).ConvertV2ToV3() + center;
             }
 
-            var prefab = UnityEngine.Random.value > 0.8f ? AlternateAgentPrefab : BaseAgentPrefab; // 20% CHANCE OF ALT PREFAB, 80% CHANCE OF BASE PREFAB
+            var prefab = Random.value > 0.8f ? AlternateAgentPrefab : BaseAgentPrefab; // 20% CHANCE OF ALT PREFAB, 80% CHANCE OF BASE PREFAB
 
             FlockAgent newAgent = Instantiate( // SPAWN NEW AGENT AT POSITION
                 prefab,
