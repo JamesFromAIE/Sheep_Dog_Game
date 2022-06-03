@@ -338,7 +338,7 @@ MonoBehaviour:
   _dogPrefab: {fileID: 1686910747811591949, guid: 03be751833d12434fae07f63cb958ba3, type: 3}
   _invalidMasks:
     serializedVersion: 2
-    m_Bits: 2112
+    m_Bits: 2048
   _selectDogClips:
   - {fileID: 8300000, guid: 3376a948a7794754fbf4a2df815bf266, type: 3}
   - {fileID: 8300000, guid: f62dd149a2aad944baec36f1f12e961a, type: 3}
@@ -1051,7 +1051,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &570632246
 GameObject:
@@ -1338,8 +1338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObstaclePrefabs:
-  - {fileID: 2277547919623667679, guid: f6823ba0aa76c804cbdc74444cd6465f, type: 3}
-  - {fileID: 3638784796295270590, guid: 2fa0632355cf7254bbfedef8af41fe4d, type: 3}
+  - {fileID: 7408652528206313340, guid: 32bbb55d7268d604eaf3e3b3e8b04fef, type: 3}
   _levelArray:
   - {fileID: 11400000, guid: 03c9204c736a90747b6b46bb0d24c60c, type: 2}
   - {fileID: 11400000, guid: 9cbe99e9b255296479b2f6101c6078d6, type: 2}
@@ -1348,7 +1347,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf74b2e698ec8684cb97a0f4fb1d673e, type: 2}
   - {fileID: 11400000, guid: 8eb298f97ef3bce4fabbeedfdda152f8, type: 2}
   - {fileID: 11400000, guid: 4f476b122547f4941ab3bae7e61d0a59, type: 2}
-  _levelWeight: 02000000020000000200000001000000010000000100000001000000
+  _levelWeight: 01000000020000000100000001000000010000000100000001000000
 --- !u!4 &624107466
 Transform:
   m_ObjectHideFlags: 0
@@ -2295,7 +2294,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &969175280
 PrefabInstance:
@@ -3587,7 +3586,7 @@ Transform:
   - {fileID: 720993786}
   - {fileID: 871080442}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1506683599
 GameObject:
@@ -4541,7 +4540,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1780759262
 GameObject:
@@ -4659,7 +4658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7713095859540346244, guid: 29d19d2caa7cc7a4f81cfe1e60613f83, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7713095859540346244, guid: 29d19d2caa7cc7a4f81cfe1e60613f83, type: 3}
       propertyPath: m_LocalPosition.x

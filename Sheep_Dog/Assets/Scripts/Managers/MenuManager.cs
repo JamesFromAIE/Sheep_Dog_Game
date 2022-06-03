@@ -20,7 +20,7 @@ public class MenuManager : MonoBehaviour
 
         ObstacleManager.Instance.GetAndSetFirstLevelLayout();
         ObstacleManager.Instance.SpawnLevel();
-        Flock.Instance.SpawnFlock(); // SPAWN NEW FLOCK
+        FlockManager.Instance.SpawnFlock(); // SPAWN NEW FLOCK
     }
 
     public void ShowCredits()

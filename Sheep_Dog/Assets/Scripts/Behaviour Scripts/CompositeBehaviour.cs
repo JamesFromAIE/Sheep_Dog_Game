@@ -6,7 +6,7 @@ public class CompositeBehaviour : FlockBehaviour
 {
     public FlockBehaviour[] behaviours; // ALL BEHAVIOURS TO EB APPLIED
     public float[] weights; // CORRESPONDING WEIGHTS RELATED TO BEHAVIOURS
-    public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, FlockManager flock)
     {
         
         if (weights.Length != behaviours.Length) // HANDLE DATA MISMATCH

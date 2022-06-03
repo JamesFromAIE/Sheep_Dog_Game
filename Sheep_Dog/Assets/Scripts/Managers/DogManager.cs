@@ -104,27 +104,6 @@ public class DogManager : MonoBehaviour
 
     }
 
-    /*
-    public void GetAndSetRandomDestination(Dog dog)
-    {
-        var randPos = (Random.insideUnitCircle * 2).ConvertV2ToV3();
-        MeshCollider movePlane = GetComponentInChildren<MeshCollider>();
-
-        int iterations = 0;
-        while (randPos.IsPointWalkable(movePlane.bounds))
-        {
-            randPos = (Random.insideUnitCircle * 2).ConvertV2ToV3();
-            randPos = movePlane.ClosestPoint(randPos);
-            iterations++;
-
-            if (iterations > 100) Debug.LogError("COULDNT FIND IDLE DOG MOVE POSITION");
-        }
-
-        dog.MoveNVAgent(randPos);
-        Debug.Log("Set Agent new move position");
-    }
-    */
-
     void GetAndSetDogDestinationNew()
     {
         Ray ray = Camera.main.ScreenPointToRay(_inputManager.GetDogMoveRayOrigin()); // CAST RAY FROM SCREEN ONTO MAP
@@ -157,7 +136,7 @@ public class DogManager : MonoBehaviour
 
                 }
             }
-            else if (Physics.Raycast(ray, out hit, 100.0f, (1 << 12))) // IF YOU HIT BOUNDARY LAYER...
+            else if (Physics.Raycast(ray, out hit, 100.0f, (1 << 12)) || Physics.Raycast(ray, out hit, 100.0f, (1 << 6))) // IF YOU HIT BOUNDARY LAYER...
             {
                 var dogs = SelectedDictionary.Instance.SelectedTable.Values.ToArray(); // PUT ALL SELECTED DOGS INTO AN ARRAY
 

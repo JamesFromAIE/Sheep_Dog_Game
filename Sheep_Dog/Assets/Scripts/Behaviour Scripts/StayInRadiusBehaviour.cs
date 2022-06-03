@@ -7,7 +7,7 @@ public class StayInRadiusBehaviour : FlockBehaviour
     public Vector3 center; // CENTER OF FLOCK
     public float radius = 25f; // RADIUS FROM CENTER
 
-    public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, FlockManager flock)
     {
         Vector3 centerOffset = center - agent.transform.position; // GET TRUE WORLD CENTER
         float t = centerOffset.magnitude / radius; // GET MOVEMENT DIRECTION TO CENTER

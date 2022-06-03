@@ -11,8 +11,8 @@ public class FlockAgent : MonoBehaviour
     [SerializeField] float MoveModifier; // PERSONAL VARIABLE TO ALTER MOVE SPEED
     float _bleetFactor; // VARIABLE FOR HOW LIKELY A SHEEP IS TO BLEET
 
-    Flock _agentFlock; // VARIABLE TO REFERENCE ORIGIN FLOCK
-    public Flock AgentFlock { get { return _agentFlock; } } // PUBLIC GETTER FOR FLOCK
+    FlockManager _agentFlock; // VARIABLE TO REFERENCE ORIGIN FLOCK
+    public FlockManager AgentFlock { get { return _agentFlock; } } // PUBLIC GETTER FOR FLOCK
 
     Collider _agentCollider; // VARIABLE TO REFERENCE COLLIDER COMPONENT
     public Collider AgentCollider { get { return _agentCollider; } } // PUBLIC GETTER FOR AGENT COLLIDER
@@ -48,7 +48,7 @@ public class FlockAgent : MonoBehaviour
     }
 
 
-    public void Initialise(Flock flock)
+    public void Initialise(FlockManager flock)
     {
         _agentFlock = flock; // SET ORIGIN FLOCK FROM FLOCK SCRIPT
     }

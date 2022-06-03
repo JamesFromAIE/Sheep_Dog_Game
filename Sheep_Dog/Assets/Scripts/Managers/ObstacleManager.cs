@@ -91,22 +91,36 @@ public class ObstacleManager : MonoBehaviour
         for (int i = 0; i < ObstacleCount; i++) // FOR EVERY COUNT OF OBSTACLE COUNT
         {
             var prefab = Helper.GetRandomValue(ObstaclePrefabs); // GET RANDOM ROCK PREFAB
-            var plane = Helper.GetRandomValue(WalkablePlanes); // GET RANDOM PLANE
+            var plane = GetSpawnablePlanes(WalkablePlanes); // GET RANDOM PLANE
+            var randRot = Quaternion.Euler(0, Random.Range(0, 8) * 45, 0);
 
             var randPos = RandomPositionInPlane(plane); // GET RANDOM POSITION
 
             while (!randPos.IsPointSpawnable(plane.bounds) || IsObstacleTooCloseToObstacles(randPos, AllObstacles, 5f)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
             {
-                plane = Helper.GetRandomValue(WalkablePlanes); // GET NEW RANDOM PLANE
+                plane = GetSpawnablePlanes(WalkablePlanes); // GET NEW RANDOM PLANE
                 randPos = RandomPositionInPlane(plane); // GET NEW RANDOM POSITION
             }
 
-            var newObstacle = Instantiate(prefab, randPos + prefab.transform.position, Quaternion.identity, transform); // INSTANTIATE NEW OBSTACLE IN SCENE
+            var newObstacle = Instantiate(prefab, randPos + prefab.transform.position, randRot, transform); // INSTANTIATE NEW OBSTACLE IN SCENE
             
             newObstacle.name = "Obstacle " + i; // NAME OBSTACLE
             AllObstacles.Add(newObstacle); // ADD OBSTACLE TO OBSTACLE LIST
 
         }
+    }
+
+    MeshCollider GetSpawnablePlanes(List<MeshCollider> planes)
+    {
+        List<MeshCollider> newList = new List<MeshCollider>();
+
+        foreach (var plane in planes) if (plane.convex == true) newList.Add(plane);
+
+        int index = Random.Range(0, newList.Count);
+
+        return newList[index];
+
+
     }
 
     bool IsObstacleTooCloseToObstacles(Vector3 point, List<Transform> list, float factor)

@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
                 ObstacleManager.Instance.GetNewLevelLayout();
                 ObstacleManager.Instance.SpawnLevel();
                 ObstacleManager.Instance.SpawnObstacles();
-                Flock.Instance.SpawnFlock();
+                FlockManager.Instance.SpawnFlock();
                 DogManager.Instance.SpawnDogs();
                 UIManager.Instance.InitialiseUI(); // INITIALISE VALUES IN UI
                 //_surface.BuildNavMesh();
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f; // PLAY REGULAR TIME
 
                 DogManager.Instance.EnableDogs(); // ENABLE DOGS IN CURRENT SCENE
-                Flock.Instance.EnableAgents(); // ENABLE AGENTS IN CURRENT SCENE
+                FlockManager.Instance.EnableAgents(); // ENABLE AGENTS IN CURRENT SCENE
                 break;
 
             case GameState.Paused: // IN CASE PAUSED...
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f; // STOP TIME
 
                 DogManager.Instance.DisableDogs(); // DISABLE DOGS IN CURRENT SCENE
-                Flock.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
+                FlockManager.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
                 break;
 
             case GameState.Complete: // IN CASE OF VICTORY...
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f; // STOP TIME
 
                 DogManager.Instance.DisableDogs(); // DISABLE DOGS IN CURRENT SCENE
-                Flock.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
+                FlockManager.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
                 break;
 
             case GameState.Failure: // IN CASE OF FAILURE...
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f; // STOP TIME
 
                 DogManager.Instance.DisableDogs(); // DISABLE DOGS IN CURRENT SCENE
-                Flock.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
+                FlockManager.Instance.DisableAgents(); // DISABLE AGENTS IN CURRENT SCENE
                 break;
         }
     }

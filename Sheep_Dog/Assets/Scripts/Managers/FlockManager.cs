@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Flock : MonoBehaviour
+public class FlockManager : MonoBehaviour
 {
-    public static Flock Instance; // VARIABLE FOR SINGLETON
+    public static FlockManager Instance; // VARIABLE FOR SINGLETON
 
     private void Awake() => Instance = this; // SET SINGLETON TO THIS SCRIPT
 
