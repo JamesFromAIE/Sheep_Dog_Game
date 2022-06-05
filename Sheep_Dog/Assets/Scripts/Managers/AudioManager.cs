@@ -46,7 +46,7 @@ public class AudioManager : MonoBehaviour
     public void SetSFXBool(bool condition)
     {
         _isSFXEnabled = condition;
-        UpdateSFXVolume();
+        //UpdateSFXVolume();
     }
 
 
@@ -80,6 +80,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlayDogRun(bool isRunning)
     {
+        if (!_isSFXEnabled) return;
+
         if (isRunning && !_runningDogSource.isPlaying) // IF CONDITION WANTS TO PLAY AND NOT CURRENTLY PLAYING...
         {
             _runningDogSource.Play(); // STOP AUDIOSOURCE
@@ -93,6 +95,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySheepBleet()
     {
+        if (!_isSFXEnabled) return;
+
         var rand = new System.Random(); // GET INSTANCE OF RANDOM()
         var clip = _sheepClips[rand.Next(_sheepClips.Count)]; // GET RANDOM BLEET CLIP
         float pitch = UnityEngine.Random.Range(80, 120) / 100; // ALTER PITCH OF AUDIO SOURCE
@@ -107,15 +111,5 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
-    async Task PlayAsyncPitch(AudioSource source)
-    {
-        float pitch = UnityEngine.Random.Range(-10, 10) / 100; // ALTER PITCH OF AUDIO SOURCE
-
-        source.Play();
-        await Task.Delay(200);
-
-        _scoreSource.pitch -= pitch;
-    }
     
 }

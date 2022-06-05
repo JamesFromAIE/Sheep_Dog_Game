@@ -12,15 +12,10 @@ public class MenuManager : MonoBehaviour
 
     public GameObject ControlsPage, SettingsPage, BackButton; // VARIABLES CONTAINING UI ELEMENTS FOR MENU PAGES
 
-    public Image SoundOffButton, SfxOffButton;
-
-    
-
+    public Button SoundButton, SFXButton, SoundOffButton, SFXOffButton;
 
     void Start()
     {
-
-
         // DISABLE ALL PAGES
         ControlsPage.SetActive(false);
         SettingsPage.SetActive(false);
@@ -31,16 +26,30 @@ public class MenuManager : MonoBehaviour
         var obj = GameObject.FindGameObjectWithTag("Gate");
         DestroyImmediate(obj);
         FlockManager.Instance.SpawnFlock(); // SPAWN NEW FLOCK
+        AddButtonListeners();
     }
 
-    public void ToggleSoundButton(bool condition)
+    void AddButtonListeners()
     {
-        SoundOffButton.enabled = condition;
+        SoundButton.onClick.AddListener(() => { ToggleSoundButton(true); AudioManager.Instance.SetMusicBool(false); });
+        SoundOffButton.onClick.AddListener(() => { ToggleSoundButton(false); AudioManager.Instance.SetMusicBool(true); });
+        SFXButton.onClick.AddListener(() => { ToggleSFXButton(true); AudioManager.Instance.SetSFXBool(false); });
+        SFXOffButton.onClick.AddListener(() => { ToggleSFXButton(false); AudioManager.Instance.SetSFXBool(true); });
+
+        AudioManager audInst = AudioManager.Instance;
+
+        ToggleSoundButton(!audInst.IsMusicEnabled);
+        ToggleSFXButton(!audInst.IsSFXEnabled);
+    }
+    
+    void ToggleSoundButton(bool condition)
+    {
+        SoundOffButton.GetComponent<Image>().enabled = condition;
     }
 
-    public void ToggleSFXButton(bool condition)
+    void ToggleSFXButton(bool condition)
     {
-        SfxOffButton.enabled = condition;
+        SFXOffButton.GetComponent<Image>().enabled = condition;
     }
 
     public void ShowSettings()
@@ -69,6 +78,11 @@ public class MenuManager : MonoBehaviour
 
     public void PlayGame()
     {
+        SoundButton.onClick.RemoveAllListeners();
+        SoundOffButton.onClick.RemoveAllListeners();
+        SFXButton.onClick.RemoveAllListeners();
+        SFXOffButton.onClick.RemoveAllListeners();
+
         SceneManager.LoadScene(1); // LOAD PLAYING SCENE
     }
 

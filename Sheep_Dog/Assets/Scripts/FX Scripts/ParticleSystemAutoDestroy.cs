@@ -10,6 +10,12 @@ public class ParticleSystemAutoDestroy : MonoBehaviour
     {
         _ps = GetComponent<ParticleSystem>();
         _gmScript = GameManager.Instance;
+
+        AudioSource aud = GetComponent<AudioSource>();
+
+        if (!AudioManager.Instance.IsSFXEnabled) return;
+
+        aud?.Play();
     }
 
     public void Update()

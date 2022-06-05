@@ -61,6 +61,9 @@ public class Dog : MonoBehaviour
     {
         IsSelected = condition; // TOGGLE DOG SELECTION
         _selectedCircle.enabled = condition; // TOGGLE SELECTED CIRCLE BENEATH DOG
+
+        if (!AudioManager.Instance.IsSFXEnabled) return;
+
         if (condition) _audSource.PlayClip(_selectSound); // PLAY BARK SOUND
     }
 
