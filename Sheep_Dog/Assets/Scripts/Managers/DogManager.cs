@@ -49,19 +49,24 @@ public class DogManager : MonoBehaviour
 
         var obstacles = ObstacleManager.Instance.AllObstacles; // GET ALL OBSTACLES FROM OBSTACLE MANAGER
 
-        var plane = Helper.GetRandomValue(ObstacleManager.Instance.WalkablePlanes);
-
-        var width = plane.transform.localScale.x * 10;
-        var length = plane.transform.localScale.z * 10;
-        var offset = plane.transform.position - new Vector3(width / 2, 0, length / 2);
-
-
         for (int i = 0; i < 2; i++) // ITERATE OVER THIS 'FOR' LOOP TWO TIMES
         {
+            var plane = Helper.GetRandomValue(ObstacleManager.Instance.WalkablePlanes);
+
+            var width = plane.transform.localScale.x * 10;
+            var length = plane.transform.localScale.z * 10;
+            var offset = plane.transform.position - new Vector3(width / 2, 0, length / 2);
+
             var randPos = new Vector3(Random.Range(width / 4, width - width / 4), 0, Random.Range(length / 4, length - length / 4)) + offset; // GET RANDOM POSITION TO SPAWN
 
             while (IsDogTooCloseToObstacles(randPos, obstacles, 2.5f)) // WHILE POSITION IS TOO CLOSE TO OBSTACLES (INSIDE OF THEM)
             {
+                plane = Helper.GetRandomValue(ObstacleManager.Instance.WalkablePlanes);
+
+                width = plane.transform.localScale.x * 10;
+                length = plane.transform.localScale.z * 10;
+                offset = plane.transform.position - new Vector3(width / 2, 0, length / 2);
+
                 randPos = new Vector3(Random.Range(width / 4, width - width / 4), 0, Random.Range(length / 4, length - length / 4)) + offset; // GET RANDOM POSITION TO SPAWN
             }
 

@@ -86,6 +86,16 @@ public class ObstacleManager : MonoBehaviour
         transform.DeleteChildren(); // DELETE OBSTACLES IN CHILDREN
     }
 
+    private void ClearObstacles()
+    {
+        foreach(var ob in AllObstacles)
+        {
+            Destroy(ob.gameObject);
+        }
+
+        AllObstacles?.Clear(); // CLEAR ALL OBSTACLES FROM LIST
+    }
+
     public void SpawnObstacles()
     {
         for (int i = 0; i < ObstacleCount; i++) // FOR EVERY COUNT OF OBSTACLE COUNT
@@ -96,10 +106,19 @@ public class ObstacleManager : MonoBehaviour
 
             var randPos = RandomPositionInPlane(plane); // GET RANDOM POSITION
 
+            int iterations = 0;
+
             while (!randPos.IsPointSpawnable(plane.bounds) || IsObstacleTooCloseToObstacles(randPos, AllObstacles, 5f)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
             {
                 plane = GetSpawnablePlanes(WalkablePlanes); // GET NEW RANDOM PLANE
                 randPos = RandomPositionInPlane(plane); // GET NEW RANDOM POSITION
+                iterations++;
+
+                if (iterations >= 100)
+                {
+                    ClearObstacles();
+                    iterations = 0;
+                }
             }
 
             var newObstacle = Instantiate(prefab, randPos + prefab.transform.position, randRot, transform); // INSTANTIATE NEW OBSTACLE IN SCENE

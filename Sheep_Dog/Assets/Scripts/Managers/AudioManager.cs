@@ -26,9 +26,56 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource[] _sheepAudSources; // ARRAY OF BLEETING AUDIO SOURCES
     [SerializeField] List<AudioClip> _sheepClips;  // ARRAY OF SHEEP BLEET SOUNDS
 
+    [SerializeField] bool _isMusicEnabled = true;
+    public bool IsMusicEnabled { get { return _isMusicEnabled; } }
+
+    [SerializeField] bool _isSFXEnabled = true;
+    public bool IsSFXEnabled { get { return _isSFXEnabled; } }
+
     void Start()
     {
         _musicSource?.Play();
+    }
+
+    public void SetMusicBool(bool condition)
+    {
+        _isMusicEnabled = condition;
+        UpdateMusicVolume();
+    }
+
+    public void SetSFXBool(bool condition)
+    {
+        _isSFXEnabled = condition;
+        UpdateSFXVolume();
+    }
+
+
+    public void UpdateMusicVolume()
+    {
+        if (_isMusicEnabled)
+        {
+            _musicSource.volume = 1;
+        }
+        else
+        {
+            _musicSource.volume = 0;
+        }
+    }
+
+    public void UpdateSFXVolume()
+    {
+        if (_isSFXEnabled)
+        {
+            _runningDogSource.volume = 1;
+            _scoreSource.volume = 1;
+            for (int i = 0; i < _sheepAudSources.Length; i++) _sheepAudSources[i].volume = 1;
+        }
+        else
+        {
+            _runningDogSource.volume = 0;
+            _scoreSource.volume = 0;
+            for (int i = 0; i < _sheepAudSources.Length; i++) _sheepAudSources[i].volume = 0;
+        }
     }
 
     public void PlayDogRun(bool isRunning)

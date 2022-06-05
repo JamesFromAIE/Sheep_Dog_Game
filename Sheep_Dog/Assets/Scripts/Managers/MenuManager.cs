@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
@@ -9,25 +10,44 @@ public class MenuManager : MonoBehaviour
 
     public int AgentCount; // VARIABLE TO CONTAIN SPAWN NUMBER
 
-    public GameObject ControlsPage, CreditsPage, BackButton; // VARIABLES CONTAINING UI ELEMENTS FOR MENU PAGES
+    public GameObject ControlsPage, SettingsPage, BackButton; // VARIABLES CONTAINING UI ELEMENTS FOR MENU PAGES
+
+    public Image SoundOffButton, SfxOffButton;
+
+    
+
 
     void Start()
     {
+
+
         // DISABLE ALL PAGES
         ControlsPage.SetActive(false);
-        CreditsPage.SetActive(false);
+        SettingsPage.SetActive(false);
         BackButton.SetActive(false);
 
         ObstacleManager.Instance.GetAndSetFirstLevelLayout();
         ObstacleManager.Instance.SpawnLevel();
+        var obj = GameObject.FindGameObjectWithTag("Gate");
+        DestroyImmediate(obj);
         FlockManager.Instance.SpawnFlock(); // SPAWN NEW FLOCK
     }
 
-    public void ShowCredits()
+    public void ToggleSoundButton(bool condition)
+    {
+        SoundOffButton.enabled = condition;
+    }
+
+    public void ToggleSFXButton(bool condition)
+    {
+        SfxOffButton.enabled = condition;
+    }
+
+    public void ShowSettings()
     {
         // DISPLAY CREDITS ONLY
         ControlsPage.SetActive(false);
-        CreditsPage.SetActive(true);
+        SettingsPage.SetActive(true);
         BackButton.SetActive(true);
     }
 
@@ -35,7 +55,7 @@ public class MenuManager : MonoBehaviour
     {
         // DISPLAY CONTROLS ONLY
         ControlsPage.SetActive(true);
-        CreditsPage.SetActive(false);
+        SettingsPage.SetActive(false);
         BackButton.SetActive(true);
     }
 
@@ -43,7 +63,7 @@ public class MenuManager : MonoBehaviour
     {
         // DISABLE ALL PAGES
         ControlsPage.SetActive(false);
-        CreditsPage.SetActive(false);
+        SettingsPage.SetActive(false);
         BackButton.SetActive(false);
     }
 
