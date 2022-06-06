@@ -108,7 +108,7 @@ public class ObstacleManager : MonoBehaviour
 
             int iterations = 0;
 
-            while (!randPos.IsPointSpawnable(plane.bounds) || IsObstacleTooCloseToObstacles(randPos, AllObstacles, 5f)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
+            while (!randPos.IsPointSpawnable(plane.bounds) || IsObstacleTooCloseToObstacles(randPos, AllObstacles, 3f)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
             {
                 plane = GetSpawnablePlanes(WalkablePlanes); // GET NEW RANDOM PLANE
                 randPos = RandomPositionInPlane(plane); // GET NEW RANDOM POSITION
@@ -133,7 +133,7 @@ public class ObstacleManager : MonoBehaviour
     {
         List<MeshCollider> newList = new List<MeshCollider>();
 
-        foreach (var plane in planes) if (plane.convex == true) newList.Add(plane);
+        foreach (var plane in planes) if (plane.isTrigger == true) newList.Add(plane);
 
         int index = Random.Range(0, newList.Count);
 
@@ -218,10 +218,10 @@ public class ObstacleManager : MonoBehaviour
             return WalkablePlanes[0];
         }
 
-        
-
         foreach (var plane in WalkablePlanes)
         {
+            if (!plane.convex) continue;
+
             if (iterations == 0)
             {
                 closestMesh = plane;

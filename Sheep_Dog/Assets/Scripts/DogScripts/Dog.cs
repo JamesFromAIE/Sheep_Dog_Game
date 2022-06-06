@@ -12,7 +12,37 @@ public class Dog : MonoBehaviour
     [SerializeField] AudioSource _audSource; // RUNNING AUDIO SOURCE COMPONENT
     public AudioClip _selectSound; // RUNNING CLIP ASSIGNED BY MANAGER
 
+    public Vector3 idlePos { get ; private set; }
+
     #region Public Methods
+
+    void Start() => idlePos = transform.position;
+
+    void Update()
+    {
+        
+        _nMAgent.speed = 30;
+
+        if (IsSelected) return;
+
+        _nMAgent.speed = 5;
+
+        if (Random.Range(0, 400) < 1) NewIdlePosition(); // CHANCE TO FIND NEW IDLE POSITION EVERY FRAME
+
+        MoveIdleAgent();
+        
+    }
+
+    public void MoveIdleAgent()
+    {
+        if (Vector3.Distance(transform.position, idlePos) < 0.2f || GameManager.Instance.State != GameState.Playing) return;
+
+        _nMAgent.SetDestination(idlePos);
+
+        Vector3 lookDir = idlePos - transform.position; // GET DIRECTION TO LOOK TOWARD DESTINATION
+        transform.forward = lookDir.FlattenLookDirection(); // LOOK IN FLATTENED DIRECTION    
+
+    }
 
     public void MoveNVAgent(Vector3 destination)
     {
@@ -31,12 +61,30 @@ public class Dog : MonoBehaviour
         else
         {
             _nMAgent.SetDestination(destination); // DOG MOVES IN THIS DIRECTION
-            var lookDir = destination - transform.position; // GET DIRECTION TO LOOK TOWARD DESTINATION
+            Vector3 lookDir = destination - transform.position; // GET DIRECTION TO LOOK TOWARD DESTINATION
             transform.forward = lookDir.FlattenLookDirection(); // LOOK IN FLATTENED DIRECTION
             ChangeDogState(DogStates.Moving); // DOG IS NOW MOVING
         }
         
     }
+
+    public void NewIdlePosition()
+    {
+        Vector3 newPos = (Random.insideUnitCircle * 5).ConvertV2ToV3() + transform.position;
+
+        int iterations = 0;
+        while (!newPos.IsPointSpawnableList(ObstacleManager.Instance.WalkablePlanes)) // WHILE SPAWN POSIITON IS OUTSIDE OF SPAWNING BOUNDS...
+        {
+            // GET NEW RANDOM POSITION TO SPAWN AGENT FROM 
+            newPos = (Random.insideUnitCircle * 5).ConvertV2ToV3() + transform.position;
+
+            iterations++;
+            if (iterations > 100) return;
+        }
+
+        idlePos = newPos;
+    }
+
     public void ChangeDogState(DogStates newState)
     {
         switch (newState)
@@ -44,6 +92,7 @@ public class Dog : MonoBehaviour
             case DogStates.Idle: // IN CASE DOG IS IDLE...
                 AudioManager.Instance.PlayDogRun(false); // DON'T PLAY RUNNING SOUND
                 IsSitting = false; // DOG IS NOT SITTING
+                idlePos = transform.position;
                 break;
             case DogStates.Sitting: // IN CASE DOG IS SITTING...
                 AudioManager.Instance.PlayDogRun(false); // DON'T PLAY RUNNING SOUND
